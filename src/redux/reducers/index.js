@@ -1,6 +1,11 @@
 import { combineReducers } from 'redux';
-import order_Details from './get_orders'
 
-export default combineReducers({
-    order_Details
-});
+import client_auth from './client_auth';
+import order_list from './order_list'
+
+const appReducers = combineReducers({
+    client_auth,
+    order_list
+})
+
+export default appReducers;

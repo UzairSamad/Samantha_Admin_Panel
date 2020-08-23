@@ -1,17 +1,16 @@
 import { http } from '../helpers';
 
-export const listing = (params) => {
+export const client_auth = () => {
+
     return new Promise((resolve, reject) => {
         try {
             http(
                 [
-
+                    'bl-api-key'
                 ],
-                'POST:backoffice/listing:JSON',
-                params,
+                'GET:client/auth:JSON',
             )
                 .then((res) => {
-
                     if (res.code === 200) resolve(res.data)
                     if (res.code !== 200) reject(res)
                 })

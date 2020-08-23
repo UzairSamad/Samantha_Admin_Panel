@@ -1,7 +1,6 @@
-import reducers from './reducers';
-import actions from './actions';
+import appReducers from './reducers';
+import appActions from './actions';
 
-export default {
-    reducers,
-    actions,
-}
+
+export const reducers = appReducers;
+export const actions = appActions;
