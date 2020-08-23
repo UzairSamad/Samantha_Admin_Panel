@@ -14,7 +14,9 @@ export default (state = initialState.order_list, action) => {
             return {
                 in_progress: false,
                 order_list_response: {
-                    list: []
+                    list: {
+                        list: []
+                    }
                 },
                 order_list_error: action.payload
             }
@@ -23,7 +25,9 @@ export default (state = initialState.order_list, action) => {
             return {
                 in_progress: true,
                 order_list_response: {
-                    list: []
+                    list: {
+                        list: []
+                    }
                 },
                 order_list_error: {},
             }
@@ -40,7 +44,9 @@ export default (state = initialState.order_list, action) => {
             return {
                 in_progress: false,
                 order_list_response: {
-                    list: []
+                    list: {
+                        list: []
+                    }
                 },
                 order_list_error: {}
             }

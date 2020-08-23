@@ -7,7 +7,9 @@ const initialState = {
     order_list: {
         in_progress: true,
         order_list_response: {
-            list: []
+            list: {
+                list: []
+            }
         },
         order_list_error: {}
     },
