@@ -1,4 +1,4 @@
-import localStorage from '../store/localStorage';
+import {setClientToken} from '../store/localStorage';
 import { API_BASE , API_KEY } from '../constants/AppConstants';
 
 export async function HttpHandler(
@@ -8,8 +8,8 @@ export async function HttpHandler(
     json = true,
 ) {
 
-    const clienatToken = localStorage.getClientToken();
-    const userToken = localStorage.getUserToken();
+    const clientToken = setClientToken();
+    const userToken = '1234'
 
     const _headers = {};
 
@@ -35,13 +35,15 @@ export async function HttpHandler(
     if (method && method.toUpperCase() === 'POST') requestConfig['body'] = JSON.stringify(params)
     if (method && method.toUpperCase() === 'DELETE') requestConfig['body'] = JSON.stringify(params)
 
-    if (ENABLE_LOGS) console.log("HTTP HANDLER > requestConfig >", requestConfig);
+    // if (ENABLE_LOGS)
+     console.log("HTTP HANDLER > requestConfig >", requestConfig);
 
     let response = await fetch(`${API_BASE}${_endpoint}`, requestConfig);
 
     if (json) {
         response = await response.json();
-        if (ENABLE_LOGS) console.log("HTTP HANDLER > response >", response);
+        // if (ENABLE_LOGS)
+         console.log("HTTP HANDLER > response >", response);
     }
 
     return response;
