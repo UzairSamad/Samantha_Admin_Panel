@@ -1,6 +1,4 @@
-import http from './httpHelper';
+import httpHelper from './httpHelper';
 
-export default {
-    http,
 
-}
+export const http = httpHelper;

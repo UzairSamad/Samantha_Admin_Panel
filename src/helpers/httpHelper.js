@@ -1,15 +1,15 @@
-import localStorage from '../store/localStorage';
-import { API_BASE , API_KEY } from '../constants/AppConstants';
+import { getClientToken, getUserToken } from '../store/localStorage';
+import { API_BASE, API_KEY, ENABLE_HTTP_LOGS } from '../constants/AppConstants';
 
-export async function HttpHandler(
+export default async function HttpHandler(
     headers,
     endpoint,
     params,
     json = true,
 ) {
 
-    const clienatToken = localStorage.getClientToken();
-    const userToken = localStorage.getUserToken();
+    const clientToken = getClientToken();
+    const userToken = getUserToken();
 
     const _headers = {};
 
@@ -30,18 +30,18 @@ export async function HttpHandler(
         headers: new Headers(_headers)
     };
 
-    console.log("${Config.API_BASE}${_endpoint} :", `${API_BASE}${_endpoint}`);
+    if (ENABLE_HTTP_LOGS) console.log("${Config.API_BASE}${_endpoint} :", `${API_BASE}${_endpoint}`);
 
     if (method && method.toUpperCase() === 'POST') requestConfig['body'] = JSON.stringify(params)
     if (method && method.toUpperCase() === 'DELETE') requestConfig['body'] = JSON.stringify(params)
 
-    if (ENABLE_LOGS) console.log("HTTP HANDLER > requestConfig >", requestConfig);
+    if (ENABLE_HTTP_LOGS) console.log("HTTP HANDLER > requestConfig >", requestConfig);
 
     let response = await fetch(`${API_BASE}${_endpoint}`, requestConfig);
 
     if (json) {
         response = await response.json();
-        if (ENABLE_LOGS) console.log("HTTP HANDLER > response >", response);
+        if (ENABLE_HTTP_LOGS) console.log("HTTP HANDLER > response >", response);
     }
 
     return response;
