@@ -31,9 +31,8 @@ componentDidMount(){
         this.props.OrderDetailsSuccess(params)
     }
     render(){
-        
-    console.log(this.props.order_Details.order_response.list)
-//  console.log(orderDetails,'orderDetails')
+        const orderDetails = this.props.order_Details.order_response.list
+
         return (
             <h1>Details</h1>
         )
