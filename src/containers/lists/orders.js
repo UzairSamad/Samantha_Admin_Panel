@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import TableView from '../../components/TableView'
 import { actions } from '../../redux';
 
 const { orders_list_action } = actions;
+
 
 class OrdersList extends Component {
 
@@ -31,12 +32,13 @@ class OrdersList extends Component {
         });
     }
     render() {
-        const orders = this.props.orders.order_list_response.list;
+        const orders = this.props.orders.order_list_response;
 
-        console.log("ORDERS LIST >", orders);
+        console.log("ORDERS LIST >" , this.props.orders.order_list_response);
+     
         
         return (
-            <h1>Details</h1>
+          <TableView orders={orders} />
         )
     }
 }
