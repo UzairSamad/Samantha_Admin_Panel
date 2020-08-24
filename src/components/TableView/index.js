@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import TableHeader from './TableHeader'
-import TableBody from './TableBody'
+import TableData from './TableData'
 import TableContainer from '@material-ui/core/TableContainer';
-import { makeStyles } from '@material-ui/core/styles';
 
-const Header = [ "order_number" ,"tracking_code","state","address","gps_address"]
+
+
 
 class TableView extends Component {
     
-
+   
     render() {
-       
+        const header=this.props.header
         const orders= this.props.orders
+        const rendertablerowdata = this.props.rendertablerowdata
 
         return (
             <TableContainer>
-                <TableHeader header={Header}/>
-                <TableBody orders={orders} />
+            <TableHeader header={header}/>
+  
+           <TableData orders={orders} rendertablerowdata={rendertablerowdata}/>
+            
             </TableContainer>
         )
     }

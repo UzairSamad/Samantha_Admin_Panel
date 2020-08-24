@@ -13,14 +13,18 @@ export default (state = initialState.order_list, action) => {
         case ORDER_LIST_REJECTED:
             return {
                 in_progress: false,
-                order_list_response: {},
+                order_list_response: {
+                    list: []
+                },
                 order_list_error: action.payload
             }
             break;
         case ORDER_LIST_PENDING:
             return {
                 in_progress: true,
-                order_list_response: {},
+                order_list_response: {
+                    list: []
+                },
                 order_list_error: {},
             }
             break;
@@ -35,7 +39,9 @@ export default (state = initialState.order_list, action) => {
         case ORDER_LIST_EMPTY:
             return {
                 in_progress: false,
-                order_list_response: {},
+                order_list_response: {
+                    list: []
+                },
                 order_list_error: {}
             }
             break;

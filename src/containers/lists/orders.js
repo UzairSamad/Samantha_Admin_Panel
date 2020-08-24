@@ -5,7 +5,8 @@ import TableView from '../../components/TableView'
 import { actions } from '../../redux';
 
 const { orders_list_action } = actions;
-
+const Header = [ "order_number" ,"tracking_code","state","address","gps_address"]
+const RenderTableRowData=["order_number" ,"tracking_code","state","address","gps_address"]
 
 class OrdersList extends Component {
 
@@ -34,11 +35,11 @@ class OrdersList extends Component {
     render() {
         const orders = this.props.orders.order_list_response;
 
-        console.log("ORDERS LIST >" , this.props.orders.order_list_response);
+        console.log("ORDERS LIST >" , this.props.orders.order_list_response.list);
      
         
         return (
-          <TableView orders={orders} />
+          <TableView orders={orders} header={Header} rendertablerowdata={RenderTableRowData}/>
         )
     }
 }

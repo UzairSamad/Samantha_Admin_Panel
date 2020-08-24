@@ -12,7 +12,7 @@ export const listing = (params) => {
             )
                 .then((res) => {
                   
-                    if (res.code === 200) resolve(res.data.list.list)
+                    if (res.code === 200) resolve(res.data.list)
                     if (res.code !== 200) reject(res)
                 })
                 .catch((e) => {

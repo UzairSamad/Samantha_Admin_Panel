@@ -6,10 +6,10 @@ class TableHeader extends Component {
     
 
     render() {
-        console.log(this.props.header,'props');
+
         const header=this.props.header
         return (
-            <TableHead>
+            <TableHead >
             <TableRow>
               {header.map((head) => (
                 <TableCell>
