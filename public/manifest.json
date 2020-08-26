@@ -1,7 +1,6 @@
 {
-  "short_name": "Blync Backoffice Panel",
-  "name": "Blync Backoffice Panel",
-  "description": "Blync Backoffice Panel",
+  "short_name": "Blync",
+  "name": "Blync Backoffice",
   "icons": [
     {
       "src": "favicon.ico",
@@ -9,9 +8,8 @@
       "type": "image/x-icon"
     }
   ],
-  "start_url": ".",
+  "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
-  "orientation":"portrait",
   "background_color": "#ffffff"
 }

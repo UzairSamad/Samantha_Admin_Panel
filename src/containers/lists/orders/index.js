@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import TableView from '../../../components/TableView'
+import TableView from '../../../components/App/TableView'
 
-import { actions } from '../../../redux';
+import AppActions from '../../../components/App/Redux/Actions';
 
-const { orders_list_action } = actions;
+const { BusinessActions } = AppActions;
+
+const { orders } = BusinessActions;
+
+const { orders_list_action } = orders;
 
 class OrdersList extends Component {
 
@@ -18,7 +22,7 @@ class OrdersList extends Component {
             },
             {
                 key: "tracking_code",
-                title: "Tracking Code",
+                title: "Tracking Code"
             },
             {
                 key: "state",
@@ -36,7 +40,7 @@ class OrdersList extends Component {
     }
 
     componentDidMount() {
-        this.fetchData()
+        //this.fetchData()
     }
 
     fetchData() {
@@ -61,7 +65,8 @@ class OrdersList extends Component {
     render() {
         return (
             <div>
-                <TableView loading={this.props.orders.in_progress} rows={this.props.orders.order_list_response.list.list} tableDisplay={this.listDisplay()} />
+                Orders Table
+                {/* <TableView loading={this.props.orders.in_progress} rows={this.props.orders.order_list_response.list.list} tableDisplay={this.listDisplay()} /> */}
             </div>
         )
     }

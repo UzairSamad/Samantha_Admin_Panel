@@ -1,7 +1,7 @@
-import { orders_list_action } from './order_list';
+import * as orders from './orders';
 
-const appActions = {
-    orders_list_action,
+const BusinessActions = {
+    orders,
 };
 
-export default appActions;
+export default BusinessActions;
