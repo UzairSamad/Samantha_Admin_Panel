@@ -89,7 +89,7 @@ function Layout1(props) {
 	const appContext = useContext(AppContext);
 	const classes = useStyles(props);
 	const { routes } = appContext;
-
+	
 	switch (config.scroll) {
 		case 'body': {
 			return (

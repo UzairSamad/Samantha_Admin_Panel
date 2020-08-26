@@ -9,27 +9,28 @@ import Toolbar from '@material-ui/core/Toolbar';
 import NavbarMobileToggleButton from '../../Shared/NavbarMobileToggleButton';
 
 const useStyles = makeStyles(theme => ({
-    separator: {
-        width: 1,
-        height: 64,
-        backgroundColor: theme.palette.divider
-    }
+	separator: {
+		width: 1,
+		height: 64,
+		backgroundColor: theme.palette.divider
+	}
 }));
 
 function ToolbarLayout(props) {
-    const classes = useStyles(props);
-    const config = useSelector(({ AppReducers }) => AppReducers.settings.current.layout.config);
-    const toolbarTheme = useSelector(({ AppReducers }) => AppReducers.settings.toolbarTheme);
-    
-    return (
-        <ThemeProvider theme={toolbarTheme}>
-            <AppBar
-                id="app-toolbar"
-                className="flex relative z-10"
-                color="default"
-            >
-                <div style={{ height: 50 }}>
-                <Toolbar className="p-0">
+	const classes = useStyles(props);
+	const config = useSelector(({ AppReducers }) => AppReducers.settings.current.layout.config);
+	const toolbarTheme = useSelector(({ AppReducers }) => AppReducers.settings.toolbarTheme);
+
+	return (
+		<ThemeProvider theme={toolbarTheme}>
+			<AppBar
+				id="app-toolbar"
+				className="flex relative z-10"
+				color="default"
+				style={{ backgroundColor: toolbarTheme.palette.background.default }}
+			>
+				<div style={{ height: 50 }}>
+					<Toolbar className="p-0">
 						{config.navbar.display && config.navbar.position === 'left' && (
 							<Hidden lgUp>
 								<NavbarMobileToggleButton className="w-64 h-0 p-10" />
@@ -44,6 +45,25 @@ function ToolbarLayout(props) {
 						</div> */}
 
 						<div className="flex">
+							{/* <div style={{ marginTop: '2.3%' }}>
+								<FormControlLabel
+									// style={{ color: '#252525' }}
+									control={
+										<Switch
+											checked={online}
+											// onChange={(e)=>{
+											// setOnline(true)
+											// 	// console.log(e.target,'e.target.value')
+
+											// }}
+											onChange={setAgentOnline}
+											name="online"
+											color="primary"
+										/>
+									}
+									label={online ? 'Go Offline' : 'Go Online'}
+								/>
+							</div> */}
 							{/* <UserMenu /> */}
 
 							<div className={classes.separator} />
@@ -65,10 +85,10 @@ function ToolbarLayout(props) {
 							</Hidden>
 						)}
 					</Toolbar>
-                </div>
-            </AppBar>
-        </ThemeProvider>
-    );
+				</div>
+			</AppBar>
+		</ThemeProvider>
+	);
 }
 
 export default React.memo(ToolbarLayout);

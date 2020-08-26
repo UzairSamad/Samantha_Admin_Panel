@@ -62,17 +62,7 @@ class AppAuth extends Component {
         });
 
     render() {
-        return (
-            <div>
-                {
-                    this.state.waitAuthCheck && <SplashScreen />
-                }
-                {
-                    !this.state.waitAuthCheck && <>{this.props.children}</>
-                }
-            </div>
-
-        )
+        return this.state.waitAuthCheck ? <SplashScreen /> : <>{this.props.children}</>;
     }
 }
 
