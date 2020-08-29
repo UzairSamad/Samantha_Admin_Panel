@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
-class Orders extends Component {
+import ClientsList from '../../containers/lists/clients';
+
+
+class Clients extends Component {
     render() {
         return (
-            <OrdersList />
+            <ClientsList />
         )
     }
 }
 
-export default Orders;
+export default Clients;

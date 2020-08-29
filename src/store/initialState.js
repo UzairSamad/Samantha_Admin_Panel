@@ -13,6 +13,34 @@ const initialState = {
         },
         order_list_error: {}
     },
+
+    client_list: {
+        in_progress: true,
+        client_list_response: {
+            list: {
+                list: []
+            }
+        },
+        client_list_error: {}
+    },
+    service_industries_list: {
+        in_progress: true,
+        service_industries_list_response: {
+            list: {
+                list: []
+            }
+        },
+        service_industries_list_error: {}
+    },
+    service_categories_list: {
+        in_progress: true,
+        service_categories_list_response: {
+            list: {
+                list: []
+            }
+        },
+        service_categories_list_error: {}
+    },
 }
 
 export default initialState;

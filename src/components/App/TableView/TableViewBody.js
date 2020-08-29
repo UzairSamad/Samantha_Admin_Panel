@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
+import Icon from '@material-ui/core/Icon'
 
 import ProgressIndicator from '../ProgressIndicator';
 
@@ -10,7 +11,7 @@ class TableViewBody extends Component {
         const rows = this.props.rows || [];
         const renderRows = this.props.renderRows || [];
         const columns = this.props.totalColumns;
-        
+
         return (
             <TableBody>
                 {
@@ -28,9 +29,17 @@ class TableViewBody extends Component {
                                 {
                                     renderRows.map((x) => {
                                         if (row[x.key]) {
-                                            if (typeof row[x.key].render === 'function') {
+                                            if (typeof row[x.key] === 'function') {
                                                 return row[x.key].render(row);
-                                            } else {
+                                            }
+                                            else if (typeof row[x.key] === 'boolean') {
+                                                return (
+                                                    <TableCell key={`${x.key}_cell_${i}`} align="center">
+                                                        <Icon>{row[x.key] === true ? 'check_circle' : 'cancel'}</Icon>
+                                                    </TableCell>
+                                                )
+                                            }
+                                            else {
                                                 return (
                                                     <TableCell key={`${x.key}_cell_${i}`} align="center">
                                                         {row[x.key]}
