@@ -8,16 +8,16 @@ const navigationConfig = [
 		children: [
 			{
 				id: 'dashboard',
-				title: 'Dashboard',
-				translate: 'Dashboard',
+				title: 'Home',
+				translate: 'Home',
 				type: 'item',
 				icon: 'dashboard',
 				url: '/dashboard',
 			},
 			{
 				id: 'orders',
-				title: 'orders',
-				translate: 'orders',
+				title: 'About',
+				translate: 'About',
 				type: 'item',
 				icon: 'dashboard',
 				url: '/orders',
