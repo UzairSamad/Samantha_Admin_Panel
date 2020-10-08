@@ -22,6 +22,22 @@ const navigationConfig = [
 				icon: 'dashboard',
 				url: '/orders',
 			},
+			{
+				id: 'orders',
+				title: 'Portfolio',
+				translate: 'Portfolio',
+				type: 'item',
+				icon: 'dashboard',
+				url: '/orders',
+			},
+			{
+				id: 'orders',
+				title: 'Contact US',
+				translate: 'Contact US',
+				type: 'item',
+				icon: 'dashboard',
+				url: '/orders',
+			},
 		]
 	},
 ];
