@@ -5,7 +5,7 @@ import AppPageCarded from '../App/AppPageCarded';
 
 
 
-const Dashboard = (props) => {
+const Courses = (props) => {
 
 
 	return (
@@ -19,4 +19,4 @@ const Dashboard = (props) => {
 	);
 }
 
-export default Dashboard;
+export default Courses;

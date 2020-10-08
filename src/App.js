@@ -14,7 +14,7 @@ import routes from './constants/RouteConfig';
 import store from './store/store';
 
 import AppTheme from './components/App/AppTheme';
-import AppAuth from './components/App/Auth';
+
 import AppLayout from './components/App/Layout';
 import AppContext from './AppContext';
 
@@ -36,13 +36,13 @@ const App = () => {
             <StylesProvider jss={jss} generateClassName={generateClassName}>
                 <Provider store={store}>
                     <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <AppAuth>
+                   
                             <Router history={history}>
                                 <AppTheme>
                                     <AppLayout />
                                 </AppTheme>
                             </Router>
-                        </AppAuth>
+         
                     </MuiPickersUtilsProvider>
                 </Provider>
             </StylesProvider>

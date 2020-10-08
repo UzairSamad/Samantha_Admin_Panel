@@ -1,4 +1,4 @@
-import AppUtils from '../../../../helpers/AppUtils';
+
 
 export const GET_NAVIGATION = '[NAVIGATION] GET NAVIGATION';
 export const SET_NAVIGATION = '[NAVIGATION] SET NAVIGATION';
@@ -28,7 +28,7 @@ export function appendNavigationItem(item, parentId) {
 		const { navigation } = getState().AppReducers;
 		return dispatch({
 			type: SET_NAVIGATION,
-			navigation: AppUtils.appendNavItem(navigation, item, parentId)
+			
 		});
 	};
 }
@@ -38,7 +38,7 @@ export function prependNavigationItem(item, parentId) {
 		const { navigation } = getState().AppReducers;
 		return dispatch({
 			type: SET_NAVIGATION,
-			navigation: AppUtils.prependNavItem(navigation, item, parentId)
+			// navigation: AppUtils.prependNavItem(navigation, item, parentId)
 		});
 	};
 }
@@ -48,7 +48,7 @@ export function updateNavigationItem(id, item) {
 		const { navigation } = getState().AppReducers;
 		return dispatch({
 			type: SET_NAVIGATION,
-			navigation: AppUtils.updateNavItem(navigation, id, item)
+			// navigation: AppUtils.updateNavItem(navigation, id, item)
 		});
 	};
 }
@@ -58,7 +58,7 @@ export function removeNavigationItem(id) {
 		const { navigation } = getState().AppReducers;
 		return dispatch({
 			type: SET_NAVIGATION,
-			navigation: AppUtils.removeNavItem(navigation, id)
+			// navigation: AppUtils.removeNavItem(navigation, id)
 		});
 	};
 }

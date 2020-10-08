@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { utils } from '../helpers';
+
 
 const routes = [
 	{
@@ -10,24 +10,29 @@ const routes = [
 		component: React.lazy(() => import('../components/Dashboard'))
 	},
 	{
-		path: '/orders',
+		path: '/about',
 		exact: true,
-		component: React.lazy(() => import('../components/Orders'))
+		component: React.lazy(() => import('../components/About'))
 	},
 	{
-		path: '/clients',
+		path: '/services',
 		exact: true,
-		component: React.lazy(() => import('../components/Clients'))
+		component: React.lazy(() => import('../components/Services'))
 	},
 	{
-		path: '/serviceIndustries',
+		path: '/portfolio',
 		exact: true,
-		component: React.lazy(() => import('../components/ServiceIndustries'))
+		component: React.lazy(() => import('../components/Portfolio'))
 	},
 	{
-		path: '/serviceCategories',
+		path: '/courses',
 		exact: true,
-		component: React.lazy(() => import('../components/ServiceCategories'))
+		component: React.lazy(() => import('../components/Courses'))
+	},
+	{
+		path: '/contact',
+		exact: true,
+		component: React.lazy(() => import('../components/Contact'))
 	}
 ];
 
