@@ -1,4 +1,4 @@
-# Blync Backoffice
+# Backoffice Template
 
 ## 1. Clone the repository
 	git clone https://github.com/blync/backoffice.git
