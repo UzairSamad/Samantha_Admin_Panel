@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 const routes = [
 	{
-		path: '/',
+		path: '/dashboard',
 		exact: true,
 		component: React.lazy(() => import('../components/Dashboard'))
 	},

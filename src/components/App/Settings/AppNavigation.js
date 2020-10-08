@@ -12,7 +12,7 @@ const navigationConfig = [
 				translate: 'Home',
 				type: 'item',
 				icon: 'dashboard',
-				url: '/',
+				url: '/dashboard',
 			},
 			{
 				id: 'about',
