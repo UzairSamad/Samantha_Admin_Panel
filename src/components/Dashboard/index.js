@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DashBoard() {
 	const classes = useStyles();
 	const [title, setTitle] = useState('')
+	const [heading, setHeading] = useState('')
 	const [subtitle, setSubTitle] = useState('')
 	const [open, setOpen] = React.useState(false);
 	const [yourmessage, setYourMessage] = useState('')
@@ -62,11 +63,15 @@ export default function DashBoard() {
 		try {
 			firebase.database().ref('HomeText').set({
 				title,
-				subtitle
+				subtitle,
+				heading
 			}).then(result => {
 				setYourMessage("Submitted Successfully")
 				setType("success")
 				setOpen(true)
+				setHeading('')
+				setTitle('')
+				setSubTitle('')
 			}).catch(err => {
 				alert(err.message)
 			})
@@ -95,6 +100,16 @@ export default function DashBoard() {
 						variant="outlined"
 						value={title}
 						onChange={e => setTitle(e.target.value)}
+					/>
+				</div>
+				<div style={{ display: 'flex', flex: 1 }}>
+					<h1>Heading Text</h1>
+					<TextField
+						label="Enter Main Text"
+						type="text"
+						variant="outlined"
+						value={heading}
+						onChange={e => setHeading(e.target.value)}
 					/>
 				</div>
 				<div style={{ display: 'flex', flex: 1 }}>
