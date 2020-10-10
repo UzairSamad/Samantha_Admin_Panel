@@ -19,6 +19,9 @@ body {
     font-size: 14px;
     line-height: 1.4;
 }
+.MuiTabs-flexContainer{
+    justify-content: space-evenly !important;
+}
 
 html, body, #root {
     width: 100%;
