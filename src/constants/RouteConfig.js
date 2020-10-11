@@ -33,6 +33,11 @@ const routes = [
 		path: '/contact',
 		exact: true,
 		component: React.lazy(() => import('../components/Contact'))
+	},
+	{
+		path: '/product',
+		exact: true,
+		component: React.lazy(() => import('../components/products'))
 	}
 ];
 

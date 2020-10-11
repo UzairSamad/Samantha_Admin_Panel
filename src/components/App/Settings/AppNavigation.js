@@ -39,6 +39,14 @@ const navigationConfig = [
 				url: '/portfolio',
 			},
 			{
+				id: 'product',
+				title: 'Product',
+				translate: 'Product',
+				type: 'item',
+				icon: 'dashboard',
+				url: '/product',
+			},
+			{
 				id: 'courses',
 				title: 'Courses',
 				translate: 'Courses',
