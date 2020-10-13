@@ -89,7 +89,8 @@ function Layout1(props) {
 	const appContext = useContext(AppContext);
 	const classes = useStyles(props);
 	const { routes } = appContext;
-	
+	console.log(appContext, 'appContextappContext')
+
 	switch (config.scroll) {
 		case 'body': {
 			return (
@@ -107,7 +108,7 @@ function Layout1(props) {
 								config.toolbar.position === 'above' && <ToolbarLayout />}
 
 							<div className={classes.wrapper}>
-								{config.navbar.display && config.navbar.position === 'left' && <AppNavbarWrapper />}
+								{/* {config.navbar.display && config.navbar.position === 'left' && <AppNavbarWrapper />} */}
 
 								<div className={classes.contentWrapper}>
 									{config.toolbar.display && config.toolbar.position === 'below' && (
@@ -127,9 +128,9 @@ function Layout1(props) {
 									{/* <SettingsPanel /> */}
 								</div>
 
-								{config.navbar.display && config.navbar.position === 'right' && (
+								{/* {config.navbar.display && config.navbar.position === 'right' && (
 									<AppNavbarWrapper />
-								)}
+								)} */}
 							</div>
 
 							{config.footer.display &&
@@ -150,20 +151,22 @@ function Layout1(props) {
 		}
 		case 'content':
 		default: {
+			const location = window.location.pathname
+			console.log(location, 'window.location');
 			return (
 				<div id="app-layout" className={clsx(classes.root, config.mode, `scroll-${config.scroll}`)}>
 					{config.leftSidePanel.display && <LeftSidePanelLayout />}
 
 					<div className="flex flex-1 flex-col overflow-hidden relative">
-						{config.toolbar.display && config.toolbar.position === 'above' && <ToolbarLayout />}
+						{/* {config.toolbar.display && config.toolbar.position === 'above' && <ToolbarLayout />} */}
 
 						<div className={classes.wrapper}>
-							{config.navbar.display && config.navbar.position === 'left' && <AppNavbarWrapper />}
+							{config.navbar.display && config.navbar.position === 'left' && location != '/login' && <AppNavbarWrapper />}
 
 							<div className={classes.contentWrapper}>
 								{config.toolbar.display &&
 									config.toolbar.position === 'below' &&
-									config.toolbar.style === 'fixed' && <ToolbarLayout />}
+									config.toolbar.style === 'fixed' && location != '/login' && <ToolbarLayout />}
 
 								<AppScrollBars className={classes.content} scrollToTopOnRouteChange>
 									{config.toolbar.display &&

@@ -1,10 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
 import AppBar from '@material-ui/core/AppBar';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
+// import firebaseconfig from '../../database'
+
+import firebase from 'firebase'
+import SuccesHandler from '../../Shared/SuccesHelper'
 
 import NavbarMobileToggleButton from '../../Shared/NavbarMobileToggleButton';
 
@@ -20,6 +24,18 @@ function ToolbarLayout(props) {
 	const classes = useStyles(props);
 	const config = useSelector(({ AppReducers }) => AppReducers.settings.current.layout.config);
 	const toolbarTheme = useSelector(({ AppReducers }) => AppReducers.settings.toolbarTheme);
+
+	const handleLogout = () => {
+		// this.props.history.push('/login')
+		firebase.auth().signOut().then(function () {
+			// Sign-out successful.
+			window.location = '/login'
+			localStorage.clear()
+
+		}).catch(function (error) {
+			// An error happened.
+		});
+	}
 
 	return (
 		<ThemeProvider theme={toolbarTheme}>
@@ -45,8 +61,8 @@ function ToolbarLayout(props) {
 						</div> */}
 
 						<div className="flex">
-							{/* <div style={{ marginTop: '2.3%' }}>
-								<FormControlLabel
+							<div style={{ marginTop: '2.3%' }}>
+								{/* <FormControlLabel
 									// style={{ color: '#252525' }}
 									control={
 										<Switch
@@ -62,26 +78,39 @@ function ToolbarLayout(props) {
 										/>
 									}
 									label={online ? 'Go Offline' : 'Go Online'}
-								/>
-							</div> */}
+								/> */}
+							</div>
 							{/* <UserMenu /> */}
+							<Button
+								variant="contained"
+								color="primary"
+								// className={classes.submit}
+								size="small"
+								style={{ height: 'fit-content', marginLeft: '1050px', marginTop: '-11px' }}
+								onClick={handleLogout}
 
-							<div className={classes.separator} />
+							>
+								LogOut
+                       </Button>
+
+							{/* <div className={classes.separator} /> */}
 
 							{/* <FuseSearch /> */}
 
-							<div className={classes.separator} />
+							{/* <div className={classes.separator} /> */}
 
 							{/* <LanguageSwitcher /> */}
 
-							<div className={classes.separator} />
+							{/* <div className={classes.separator} /> */}
 
 							{/* <QuickPanelToggleButton /> */}
+
 						</div>
 
 						{config.navbar.display && config.navbar.position === 'right' && (
 							<Hidden lgUp>
 								<NavbarMobileToggleButton />
+
 							</Hidden>
 						)}
 					</Toolbar>

@@ -36,13 +36,12 @@ const App = () => {
             <StylesProvider jss={jss} generateClassName={generateClassName}>
                 <Provider store={store}>
                     <MuiPickersUtilsProvider utils={MomentUtils}>
-                   
-                            <Router history={history}>
-                                <AppTheme>
-                                    <AppLayout />
-                                </AppTheme>
-                            </Router>
-         
+
+                        <Router history={history}>
+                            <AppTheme>
+                                <AppLayout />
+                            </AppTheme>
+                        </Router>
                     </MuiPickersUtilsProvider>
                 </Provider>
             </StylesProvider>
