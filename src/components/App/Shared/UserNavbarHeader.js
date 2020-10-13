@@ -68,9 +68,7 @@ function UserNavbarHeader(props) {
 				alt="user photo"
 				style={{width:60,height:60 }}
 				src={
-					user.data.image && user.data.image !== ''
-						? user.data.image
-						: '../../../'
+						require('../../../images/LOGO.png')
 				}
 			/>
 		</AppBar>
