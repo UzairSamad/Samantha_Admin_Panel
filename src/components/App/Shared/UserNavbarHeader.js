@@ -38,17 +38,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function UserNavbarHeader(props) {
+	const [email, setEmail] = React.useState('')
 	const user = {
-        data: {
-            displayName: 'Admin',
+		data: {
+			displayName: 'Admin',
 			email: 'admin@blync.com',
 			image: ''
-        }
-    }
+		}
+	}
+
+	React.useEffect(() => {
+		let userEmail = localStorage.getItem('email')
+		setEmail(userEmail)
+	}, [])
 
 	const classes = useStyles();
 
-    return (
+	return (
 		<AppBar
 			position="static"
 			color="primary"
@@ -60,13 +66,13 @@ function UserNavbarHeader(props) {
 				{user.data.displayName}
 			</Typography>
 			<Typography className="email text-11 mt-8 opacity-50 whitespace-no-wrap" color="inherit">
-				{user.data.email}
+				{email}
 
 			</Typography>
 			<Avatar
 				className={clsx(classes.avatar, 'avatar')}
 				alt="user photo"
-				style={{width:60,height:60 }}
+				style={{ width: 60, height: 60 }}
 				src={
 						require('../../../images/LOGO.png')
 				}

@@ -38,6 +38,11 @@ const routes = [
 		path: '/product',
 		exact: true,
 		component: React.lazy(() => import('../components/products'))
+	},
+	{
+		path: '/login',
+		exact: true,
+		component: React.lazy(() => import('../components/Login/index'))
 	}
 ];
 
