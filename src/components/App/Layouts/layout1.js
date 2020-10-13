@@ -161,12 +161,12 @@ function Layout1(props) {
 						{/* {config.toolbar.display && config.toolbar.position === 'above' && <ToolbarLayout />} */}
 
 						<div className={classes.wrapper}>
-							{config.navbar.display && config.navbar.position === 'left' && location != '/login' && <AppNavbarWrapper />}
+							{config.navbar.display && config.navbar.position === 'left' && location != '/login'  &&   location != '/' && <AppNavbarWrapper />}
 
 							<div className={classes.contentWrapper}>
 								{config.toolbar.display &&
 									config.toolbar.position === 'below' &&
-									config.toolbar.style === 'fixed' && location != '/login' && <ToolbarLayout />}
+									config.toolbar.style === 'fixed' && location != '/login' &&   location != '/' && <ToolbarLayout />}
 
 								<AppScrollBars className={classes.content} scrollToTopOnRouteChange>
 									{config.toolbar.display &&

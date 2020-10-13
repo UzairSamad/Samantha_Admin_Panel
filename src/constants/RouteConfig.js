@@ -5,6 +5,11 @@ import { Redirect } from 'react-router-dom';
 
 const routes = [
 	{
+		path: '/',
+		exact: true,
+		component: React.lazy(() => import('../components/Login/index'))
+	},
+	{
 		path: '/dashboard',
 		exact: true,
 		component: React.lazy(() => import('../components/Dashboard'))
