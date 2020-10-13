@@ -175,7 +175,7 @@ const AddServiceForm = () => {
                 <Input
                     type="file"
                     name="file"
-                    placeholder="Upload Image"
+                    placeholder="Update Image"
                     onChange={handleUpload}
                 />
                 {/* <h1>Inner Image For Andriod/IOS</h1>

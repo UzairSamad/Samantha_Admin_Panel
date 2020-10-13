@@ -67,7 +67,7 @@ export default function CardComponent(props) {
         setopenSnack(false);
     };
 
-
+    const [Title, setTItle] = React.useState(title)
     const [name, setName] = React.useState(companyName)
     const [Description, setDescription] = React.useState(description)
     const [secImage1, setsecImage1] = React.useState(seondaryImage1)
@@ -107,6 +107,9 @@ export default function CardComponent(props) {
         } else if (e.target.name === "WEBLINK") {
             setWEBLINK(e.target.value)
         }
+        else if (e.target.name === "Title") {
+            setTItle(e.target.value)
+        }
     }
 
     const handleUpload = async (e) => {
@@ -138,25 +141,32 @@ export default function CardComponent(props) {
         setopenSnack(true)
     }
 
-    // const handleSubmit = () => {
+    const handleSubmit = () => {
 
-    //     firebase.database().ref(`Services/${props.activekey}`).update({
-    //         title: Title, description: Description, subdescription: SubDes, enddescription: EndDes, image: Image
-    //     }).then(result => {
-    //         setDescription("")
-    //         setSubdescription('')
-    //         setEnddescription("")
-    //         setImage('')
-    //         setTitle("")
-    //         setYourMessage("Updated Successfully")
-    //         setType("success")
-    //         setOpen(false)
-    //         setopenSnack(true)
+        firebase.database().ref(`Portfolio/${props.activekey}`).update({
+            androidlink: ANDROIDLINK,
+            companyName: name,
+            coverImage: Image,
+            description: Description,
+            ioslink: IOSLINK,
+            uilink: UILINK,
+            weblink: WEBLINK,
+            title: Title,
 
-    //     }).catch(error => {
-    //         alert(error.message)
-    //     })
-    // }
+        }).then(result => {
+            setDescription("")
+
+            setImage('')
+
+            setYourMessage("Updated Successfully")
+            setType("success")
+            setOpen(false)
+            setopenSnack(true)
+
+        }).catch(error => {
+            alert(error.message)
+        })
+    }
 
     return (
         <div style={{
@@ -178,6 +188,8 @@ export default function CardComponent(props) {
             >
                 <DialogTitle id="alert-dialog-title" style={{ textAlign: 'center' }}>{"Update Content"}</DialogTitle>
                 <DialogContent>
+                    <TextField size="small" onChange={handleChange} style={{ width: '100%', margin: '2%' }} multiline={true} name="Title" value={Title} label="Title" variant="outlined" />
+
                     <TextField size="small" onChange={handleChange} style={{ width: '100%', margin: '2%' }} multiline={true} name="name" value={name} label="name" variant="outlined" />
                     <TextField size="small" onChange={handleChange} style={{ width: '100%', margin: '2%' }} multiline={true} name="description" value={Description} label="Description" variant="outlined" />
                     <TextField size="small" onChange={handleChange} style={{ width: '100%', margin: '2%' }} multiline={true} name="ANDROIDLINK" value={ANDROIDLINK} label="ANDROID LINK" variant="outlined" />
@@ -188,24 +200,8 @@ export default function CardComponent(props) {
                 <DialogActions>
                     {loading ? <h2>Please Wait...</h2> : null}
                     {error != "" ? <h1><strong>{error}</strong></h1> : null}
-                    <input
-                        accept="image/*"
-                        className={classes.input}
-                        style={{ display: 'none' }}
-                        id="raised-button-file"
-                        multiple
-                        type="file"
-                        onChange={handleUpload}
-                    />
-                    <label htmlFor="raised-button-file">
 
-
-                        <Button variant="contained" color="primary" component="span" className={classes.button}>
-                            Upload Image
-                        </Button>
-
-                    </label>
-                    <Button onClick="" variant="contained" color="primary">
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
                         Submit
           </Button>
                     <Button onClick={handleClickOpen} variant="contained" color="primary" autoFocus>
@@ -223,7 +219,11 @@ export default function CardComponent(props) {
                     }}>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
 
-                            <strong>{name}</strong>
+                            <strong>Title:</strong> <strong>{Title}</strong>
+                        </Typography>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+
+                            <strong>Company Name: </strong><strong>{name}</strong>
                         </Typography>
                         <Button variant="contained" color="primary" onClick={handleClickOpen}>
                             Update Content
