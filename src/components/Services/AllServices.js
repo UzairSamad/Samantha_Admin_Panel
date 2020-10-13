@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import firebase from 'firebase'
 import firebaseconfig from '../../database'
-import { Card } from '../../reusable'
+import { ServiceCard } from '../../reusable'
 
 const AllServices = (props) => {
 
@@ -26,14 +26,14 @@ const AllServices = (props) => {
                         <div className="row">
                             {availableKeys.length > 0 ? (
                                 availableKeys.map(data => (
-                                    <Card
+                                    <ServiceCard
                                         activekey={data}
                                         data={ArrayData[data]}
                                     />
                                 ))
 
-                            ) : (<div style={{flex:1,display:'flex',justifyContent:'center',alignItems:'center',marginTop:'5-%'}}>
-                                <h2 className="text-center">No Services Available
+                            ) : (<div style={{flex:1,display:'flex',justifyContent:'center',alignItems:'center',marginTop:'20%'}}>
+                                <h2 className="text-center"><strong> No Services Available</strong>
                                     </h2>
                             </div>
                                 )}

@@ -1,5 +1,8 @@
-import Card from './servicecard'
+import ServiceCard from './servicecard'
+import PortfolioCard from './portfolio'
+
 
 export {
-    Card
+    ServiceCard,
+    PortfolioCard
 }
