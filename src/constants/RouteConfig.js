@@ -17,12 +17,12 @@ const routes = [
 	{
 		path: '/audio',
 		exact: true,
-		component: React.lazy(() => import('../components/About'))
+		component: React.lazy(() => import('../components/Audio'))
 	},
 	{
 		path: '/video',
 		exact: true,
-		component: React.lazy(() => import('../components/Services'))
+		component: React.lazy(() => import('../components/Video'))
 	},
 ];
 
