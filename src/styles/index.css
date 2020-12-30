@@ -2,6 +2,13 @@
 
 @import 'tailwind-base.css';
 
+.MuiOutlinedInput-input{
+    padding:10px 10px !important
+}
+.MuiOutlinedInput-multiline{
+    padding:5px 0px !important
+
+}
 body.no-animate *,
 body.no-animate *::before,
 body.no-animate *::after {

@@ -39,6 +39,9 @@ export default function MediaCard({data}) {
           <Typography variant="body2" color="textSecondary" component="p">
            {data.description}
           </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+           {`description`}
+          </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
