@@ -6,42 +6,51 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import firebase from "firebase"
+import fire from "../../../database"
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CustomDialog({isOPen,onClose,renderDialogBody,title}) {
+export default function CustomDialog({ data, isOPen, onClose, renderDialogBody, title, onSubmit }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClose = () => {
+
     onClose()
+
   };
 
+  const handleSubmit = () => {
+
+    onSubmit()
+  }
+
   return (
-  
-      <Dialog
-        open={isOPen}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-        fullWidth={`sm`}
-      >
-        <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
-        <DialogContent>
+
+    <Dialog
+      open={isOPen}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-slide-title"
+      aria-describedby="alert-dialog-slide-description"
+      fullWidth={`sm`}
+    >
+      <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
+      <DialogContent>
         {renderDialogBody()}
 
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
-           Save
+        <Button onClick={handleSubmit} color="primary" >
+          Save
           </Button>
-        </DialogActions>
-      </Dialog>
+      </DialogActions>
+    </Dialog>
   );
 }

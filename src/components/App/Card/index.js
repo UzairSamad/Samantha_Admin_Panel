@@ -7,12 +7,14 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import firebase from "firebase"
+import fire from "../../../database"
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 300,
-    marginBottom:"10px",
-    marginTop:"10px"
+    marginBottom: "10px",
+    marginTop: "10px"
 
   },
   media: {
@@ -21,7 +23,17 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard({data}) {
+
+
+export default function MediaCard({ data,renderkey }) {
+
+  const deleteVideo = () => {
+    // alert("called")
+// firebase.database().ref("")
+firebase.database().ref(`videos/${renderkey}`).remove().then((res)=>{
+  alert("video deleted")
+})
+  }
   const classes = useStyles();
 
   return (
@@ -30,22 +42,22 @@ export default function MediaCard({data}) {
         <CardMedia
           className={classes.media}
           component="iframe"
-           src={data.url}
+          src={data.video}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {data.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-           {data.description}
+            {data.description}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-           {`description`}
+            {`description`}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" onClick={()=>{alert('Video Will be deleted')}}>
+        <Button size="small" color="primary" variant="contained" onClick={deleteVideo}>
           Delete
         </Button>
       </CardActions>

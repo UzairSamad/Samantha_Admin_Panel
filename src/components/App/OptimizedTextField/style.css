@@ -1,0 +1,48 @@
+.textbox-def  { 
+    width: 100%;
+    background: #fff !important;
+    border:1px solid #DCDCDC !important;
+    border-radius: 4px !important;
+}
+
+.textbox-def .MuiFilledInput-root { 
+    background-color: #fff !important; 
+    border-radius: 4px !important;
+}
+
+
+.textbox-def .MuiFormLabel-root.Mui-focused {
+    color: #1890FF !important;
+}
+    
+
+.MuiFilledInput-underline:after {
+    border-bottom: none !important
+}
+
+.textField-area {
+    display: flex;
+}
+
+.textField-area .MuiFilledInput-input {
+    padding: 13px 0px 13px 10px;
+}
+
+.passIcon{
+    margin-left: -12% !important;
+    margin-top: 5px !important;
+}
+
+.passIcon:focus { 
+    outline: none !important;
+}
+.passIcon:hover { 
+    background: none !important;
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 991px) {
+    .passIcon{
+        margin-left: -15% !important;
+    }
+}
