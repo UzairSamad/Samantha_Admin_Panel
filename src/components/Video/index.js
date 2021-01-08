@@ -10,6 +10,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from "axios"
 import OptimizedField from "../App/OptimizedTextField"
 import firebase from "firebase"
+import Snackbar from '@material-ui/core/Snackbar';
+
 import fire from "../../database"
 
 const useStyles = makeStyles((theme) => ({
@@ -36,6 +38,11 @@ const Video = (props) => {
 		title: "",
 		price: "",
 		description: ""
+	})
+	const [snackData, setSnackData] = React.useState({
+		isOPen:false,
+		snackbarMessage: null,
+		severity:null
 	})
 
 	React.useEffect(() => {
@@ -105,9 +112,19 @@ const Video = (props) => {
 				.then((res) => {
 					setUploadMedia(res.data.secure_url)
 					setLoader(false)
+					setSnackData({
+						isOPen:true,
+						snackbarMessage: 'Video Updated Succesfully',
+						severity:'success'
+					})
 				}).catch((err) => {
-					alert("something went wrong")
+					// alert("something went wrong")
 					setLoader(false)
+					setSnackData({
+						isOPen:true,
+						snackbarMessage: 'Failed to upload video',
+						severity:'error'
+					})
 				})
 		}
 
@@ -120,85 +137,112 @@ const Video = (props) => {
 			})
 		}
 		return (
-			<div class="row">
-				<input
-					type="file"
-					id="file"
-					ref={inputRef}
-					style={{ display: "none" }}
-					onChange={(e) => {
-						handleUploadChange(e)
-					}}
-				/>
-				<div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
+			<>
+				<Snackbar open={snackData.isOPen} autoHideDuration={4000}>
+					<Alert  severity={snackData.severity}>
+						{snackData.snackbarMessage}
+					  </Alert>
+				</Snackbar>
+				<div class="row">
+					<input
+						type="file"
+						id="file"
+						ref={inputRef}
+						style={{ display: "none" }}
+						onChange={(e) => {
+							handleUploadChange(e)
+						}}
+					/>
+					<div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
 
-					<OptimizedField
-						name="title"
-						type="text"
-						placeholder="Title"
-						onChange={onChange}
-						value={inputs.title}
-					/>
-				</div>
-				<div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
+						<OptimizedField
+							name="title"
+							type="text"
+							placeholder="Title"
+							onChange={onChange}
+							value={inputs.title}
+						/>
+					</div>
+					<div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
 
-					<OptimizedField
-						name="price"
-						type="text"
-						placeholder="Price"
-						label="Price"
-						onChange={onChange}
-						value={inputs.price}
-					/>
-				</div>
-				<div class="col-md-12 col-sm-12" style={{ marginBottom: '12px' }}>
-					{/* <InputLabel style={{ color: 'black' }} >Description</InputLabel> */}
-					<OptimizedField
-						name="description"
-						type="text"
-						placeholder="Description"
-						onChange={onChange}
-						value={inputs.description}
-					/>
-				</div>
-				<div class="col-md-12 col-sm-12" style={{ marginBottom: '12px' }}>
-					{uploadMedia &&
-						<CardMedia
-							className={classes.media}
-							component="iframe"
-							src={uploadMedia}
-							style={{ height: 200 }}
-						/>}
-				</div>
-				<div class="col-md-4 col-sm-12" style={{ marginBottom: '12px' }}>
-					{loader ? <CircularProgress /> :
-						uploadMedia != null ?
-							<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => setUploadMedia(null)}>
-								Remove Video
+						<OptimizedField
+							name="price"
+							type="text"
+							placeholder="Price"
+							label="Price"
+							onChange={onChange}
+							value={inputs.price}
+						/>
+					</div>
+					<div class="col-md-12 col-sm-12" style={{ marginBottom: '12px' }}>
+						{/* <InputLabel style={{ color: 'black' }} >Description</InputLabel> */}
+						<OptimizedField
+							name="description"
+							type="text"
+							placeholder="Description"
+							onChange={onChange}
+							value={inputs.description}
+						/>
+					</div>
+					<div class="col-md-12 col-sm-12" style={{ marginBottom: '12px' }}>
+						{uploadMedia &&
+							<CardMedia
+								className={classes.media}
+								component="iframe"
+								src={uploadMedia}
+								style={{ height: 200 }}
+							/>}
+					</div>
+					<div class="col-md-4 col-sm-12" style={{ marginBottom: '12px' }}>
+						{loader ? <CircularProgress /> :
+							uploadMedia != null ?
+								<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => setUploadMedia(null)}>
+									Remove Video
   							</Button>
-							:
-							<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => handleOpenfileselect()}>
-								Upload Video
+								:
+								<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => handleOpenfileselect()}>
+									Upload Video
   				</Button>
 
-					}
-				</div>
+						}
+					</div>
 
-			</div>
+				</div>
+			</>
 		)
 	}
 	const onClose = () => {
 		setShowModal(false)
+		setInputs({
+			title: "",
+			price: "",
+			description: ""
+		})
 	}
 	const onSubmit = () => {
 		firebase.database().ref(`videos`).push({
 			...data
 		}).then((res) => {
 			onClose()
+			setInputs({
+				title: "",
+				price: "",
+				description: ""
+			})
+			setSnackData({
+				isOPen:true,
+				snackbarMessage: 'Video Added Succesfully',
+				severity:'success'
+			})
 
 		}).catch((err) => {
 			alert(err)
 			onClose()
+			setSnackData({
+				isOPen:true,
+				snackbarMessage: 'Failed to upload video',
+				severity:'error'
+			})
 		})
 	}
 	console.log(inputs, "INPUASDASD");

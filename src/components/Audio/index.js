@@ -31,6 +31,23 @@ const Audio = (props) => {
 	const classes = useStyles();
 	const [showModal, setShowModal] = React.useState(false)
 	const [uploadMedia, setUploadMedia] = React.useState(null)
+	const [ArrayData, setArrayData] = React.useState([])
+	const [loader, setLoader] = React.useState(false)
+
+	const [snackData, setSnackData] = React.useState({
+		isOPen: false,
+		snackbarMessage: null,
+		severity: null
+	})
+
+	React.useEffect(() => {
+		firebase.database().ref("videos").on("value", snapshot => {
+			let data = snapshot.val() ? snapshot.val() : {}
+			let Items = { ...data }
+			setArrayData(Items)
+		})
+	}, [])
+
 	const [audio, setAudio] = React.useState([
 
 		{
@@ -84,6 +101,33 @@ const Audio = (props) => {
 
 	]);
 
+	const onSubmit = () => {
+		firebase.database().ref(`audio`).push({
+			...data
+		}).then((res) => {
+			onClose()
+			setInputs({
+				title: "",
+				price: "",
+				description: ""
+			})
+			setSnackData({
+				isOPen:true,
+				snackbarMessage: 'Video Added Succesfully',
+				severity:'success'
+			})
+
+		}).catch((err) => {
+			alert(err)
+			onClose()
+			setSnackData({
+				isOPen:true,
+				snackbarMessage: 'Failed to upload video',
+				severity:'error'
+			})
+		})
+	}
+
 	const renderDialogContent = () => {
 		const inputRef = React.createRef()
 
@@ -92,7 +136,11 @@ const Audio = (props) => {
 		}
 
 		const handleUploadChange = (e) => {
+			setLoader(true)
 			setUploadMedia(URL.createObjectURL(e.target.files[0]))
+			const formData = new FormData()
+			formData.append("file", e.target.files[0])
+
 		}
 		return (
 			<div class="row">
@@ -125,9 +173,16 @@ const Audio = (props) => {
 					/>}
 				</div>
 				<div class="col-md-4 col-sm-12" style={{ marginBottom: '12px' }}>
-					<Button onClick={() => handleOpenfileselect()} style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary">
-						Upload Audio
-  				</Button>
+					{loader ? <CircularProgress /> :
+						uploadMedia != null ?
+							<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => setUploadMedia(null)}>
+								Remove Video
+  							</Button>
+							:
+							<Button onClick={() => handleOpenfileselect()} style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary">
+								Upload Audio
+						  </Button>
+					}
 				</div>
 
 			</div>
@@ -135,7 +190,7 @@ const Audio = (props) => {
 	}
 	return (
 		<div style={{ padding: '20px' }} >
-			<CustomDialog title={'Add New Audio'} renderDialogBody={() => renderDialogContent()} isOPen={showModal} onClose={() => { setShowModal(false) }} />
+			<CustomDialog title={'Add New Audio'} renderDialogBody={() => renderDialogContent()} onSubmit={onSubmit} isOPen={showModal} onClose={() => { setShowModal(false) }} />
 
 			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 				<h2>	All Audios			</h2>
