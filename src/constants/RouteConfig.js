@@ -24,6 +24,11 @@ const routes = [
 		exact: true,
 		component: React.lazy(() => import('../components/Video'))
 	},
+	{
+		path: '/packages',
+		exact: true,
+		component: React.lazy(() => import('../components/Packages'))
+	},
 ];
 
 export default routes;

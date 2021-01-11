@@ -11,7 +11,7 @@ import axios from "axios"
 import OptimizedField from "../App/OptimizedTextField"
 import firebase from "firebase"
 import Snackbar from '@material-ui/core/Snackbar';
-
+import Alert from '@material-ui/lab/Alert';
 import fire from "../../database"
 
 const useStyles = makeStyles((theme) => ({
@@ -34,15 +34,16 @@ const Video = (props) => {
 	const [uploadMedia, setUploadMedia] = React.useState(null)
 	const [ArrayData, setArrayData] = React.useState([])
 	const [loader, setLoader] = React.useState(false)
+	const [isOPenSnackBar, setIsOpenSnackBar] = React.useState(false)
 	const [inputs, setInputs] = React.useState({
 		title: "",
 		price: "",
 		description: ""
 	})
 	const [snackData, setSnackData] = React.useState({
-		isOPen:false,
+		isOPen: false,
 		snackbarMessage: null,
-		severity:null
+		severity: null
 	})
 
 	React.useEffect(() => {
@@ -50,50 +51,18 @@ const Video = (props) => {
 			let data = snapshot.val() ? snapshot.val() : {}
 			let Items = { ...data }
 			setArrayData(Items)
+			console.log('Items')
 		})
 	}, [])
 
 	const keys = Object.keys(ArrayData)
 
-	// const [videos, setValue] = React.useState([
-	// 	{
-	// 		title: 'Video Title Here',
-	// 		description: 'Video Description Here',
-	// 		url: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4?_=1'
-	// 	},
-	// 	{
-	// 		title: 'Sample 1',
-	// 		description: 'Video Description Here',
-	// 		url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
-	// 	},
-	// 	{
-	// 		title: 'Sample 2',
-	// 		description: 'Video Description Here',
-	// 		url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
-	// 	},
-	// 	{
-	// 		title: 'Sample 2',
-	// 		description: 'Video Description Here',
-	// 		url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
-	// 	},
-	// 	{
-	// 		title: 'Sample 2',
-	// 		description: 'Video Description Here',
-	// 		url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
-	// 	},
-	// 	{
-	// 		title: 'Sample 2',
-	// 		description: 'Video Description Here',
-	// 		url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
-	// 	},
-	// 	{
-	// 		title: 'Sample 2',
-	// 		description: 'Video Description Here',
-	// 		url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
-	// 	},
-
-	// ]);
-
+	const handleSnackClose = (event, reason,) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setIsOpenSnackBar(false)
+	}
 
 	const renderDialogContent = () => {
 		const inputRef = React.createRef()
@@ -112,19 +81,9 @@ const Video = (props) => {
 				.then((res) => {
 					setUploadMedia(res.data.secure_url)
 					setLoader(false)
-					setSnackData({
-						isOPen:true,
-						snackbarMessage: 'Video Updated Succesfully',
-						severity:'success'
-					})
 				}).catch((err) => {
 					// alert("something went wrong")
 					setLoader(false)
-					setSnackData({
-						isOPen:true,
-						snackbarMessage: 'Failed to upload video',
-						severity:'error'
-					})
 				})
 		}
 
@@ -138,11 +97,7 @@ const Video = (props) => {
 		}
 		return (
 			<>
-				<Snackbar open={snackData.isOPen} autoHideDuration={4000}>
-					<Alert  severity={snackData.severity}>
-						{snackData.snackbarMessage}
-					  </Alert>
-				</Snackbar>
+
 				<div class="row">
 					<input
 						type="file"
@@ -154,7 +109,6 @@ const Video = (props) => {
 						}}
 					/>
 					<div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
-
 						<OptimizedField
 							name="title"
 							type="text"
@@ -218,6 +172,7 @@ const Video = (props) => {
 			price: "",
 			description: ""
 		})
+		setLoader(false)
 	}
 	const onSubmit = () => {
 		firebase.database().ref(`videos`).push({
@@ -230,19 +185,24 @@ const Video = (props) => {
 				description: ""
 			})
 			setSnackData({
-				isOPen:true,
+				isOPen: true,
 				snackbarMessage: 'Video Added Succesfully',
-				severity:'success'
+				severity: 'success'
 			})
+			setIsOpenSnackBar(true)
+
 
 		}).catch((err) => {
 			alert(err)
 			onClose()
 			setSnackData({
-				isOPen:true,
+				isOPen: true,
 				snackbarMessage: 'Failed to upload video',
-				severity:'error'
+				severity: 'error'
 			})
+
+
+
 		})
 	}
 	console.log(inputs, "INPUASDASD");
@@ -255,6 +215,11 @@ const Video = (props) => {
 
 	return (
 		<div style={{ padding: '20px' }} >
+			<Snackbar open={isOPenSnackBar} autoHideDuration={4000} onClose={handleSnackClose}  >
+				<Alert severity={snackData.severity}>
+					{snackData.snackbarMessage}
+				</Alert>
+			</Snackbar>
 			<CustomDialog
 				title={'Add New Video'}
 				renderDialogBody={() => renderDialogContent()}
@@ -280,7 +245,16 @@ const Video = (props) => {
 							<div class="col-md-4 col-sm-12">
 								<MediaCard
 									renderkey={val}
-									data={ArrayData[val]} />
+									data={ArrayData[val]}
+									handleOPenSnack={() => {
+										setIsOpenSnackBar(true)
+										setSnackData({
+											snackbarMessage: 'Video Deleted Succesfully',
+											severity: 'success',
+											isOPen: true
+										})
+									}}
+								/>
 							</div>
 						)
 					})

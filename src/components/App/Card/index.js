@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import firebase from "firebase"
 import fire from "../../../database"
 
+
 const useStyles = makeStyles({
   root: {
     maxWidth: 300,
@@ -25,13 +26,14 @@ const useStyles = makeStyles({
 
 
 
-export default function MediaCard({ data,renderkey }) {
+export default function MediaCard({ data,renderkey,handleOPenSnack }) {
+  
 
   const deleteVideo = () => {
     // alert("called")
 // firebase.database().ref("")
 firebase.database().ref(`videos/${renderkey}`).remove().then((res)=>{
-  alert("video deleted")
+  handleOPenSnack()
 })
   }
   const classes = useStyles();

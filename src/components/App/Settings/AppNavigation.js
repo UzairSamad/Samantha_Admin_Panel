@@ -30,6 +30,14 @@ const navigationConfig = [
 				icon: 'dashboard',
 				url: '/audio',
 			},
+			{
+				id: 'package',
+				title: 'Pacakages',
+				translate: 'Packages',
+				type: 'item',
+				icon: 'dashboard',
+				url: '/packages',
+			},
 		]
 	},
 ];
