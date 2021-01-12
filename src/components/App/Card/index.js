@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
 
 
-export default function MediaCard({ data,renderkey,handleOPenSnack }) {
+export default function MediaCard({ data,renderkey,handleOPenSnack ,editVideo}) {
   
 
   const deleteVideo = () => {
@@ -35,6 +35,10 @@ export default function MediaCard({ data,renderkey,handleOPenSnack }) {
 firebase.database().ref(`videos/${renderkey}`).remove().then((res)=>{
   handleOPenSnack()
 })
+  }
+
+  const handleEditVideo =() => {
+    editVideo()
   }
   const classes = useStyles();
 
@@ -47,19 +51,26 @@ firebase.database().ref(`videos/${renderkey}`).remove().then((res)=>{
           src={data.video}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {data.title}
+          <Typography  style={{fontWeight:'bold'}}  component="h2">
+            {`Title : ${data.title}`}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" style={{fontWeight:'bold'}}  component="p">
+            {`Price: ${data.price}`}
+          </Typography>
+          <Typography variant="body2" style={{fontWeight:'bold'}} component="p">
+            {`Description:`}
+          </Typography>
+          <Typography variant="body2" component="p">
             {data.description}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {`description`}
-          </Typography>
+         
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" variant="contained" onClick={deleteVideo}>
+        <Button size="small" fullWidth color="primary" variant="contained" onClick={handleEditVideo}>
+          Edit
+        </Button>
+        <Button size="small"  fullWidth color="primary" variant="contained" onClick={deleteVideo}>
           Delete
         </Button>
       </CardActions>

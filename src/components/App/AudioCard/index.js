@@ -32,24 +32,31 @@ export default function MediaCard(props) {
       props.handleOPenSnack()
     })
   }
+  const handleEditVideo = () => {
+    props.editVideo()
+  }
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="h2">
-          {props.data.title}
+        {props.children}
+        <Typography  style={{fontWeight:'bold'}}component="h2">
+          {`Title: ${props.data.title}`}
         </Typography>
-       
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" style={{fontWeight:'bold'}}component="p">
+          {`Price: ${props.data.price}`}
+        </Typography>
+        <Typography variant="body2" style={{fontWeight:'bold'}}component="p">
+          {`Description:`}
+        </Typography>
+        <Typography variant="body2"  component="p">
           {props.data.description}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {props.data.price}
-        </Typography>
-
-        {props.children}
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary" onClick={() => { deleteVideo()}}>
+        <Button size="small"  fullWidth color="primary" variant="contained" onClick={handleEditVideo}>
+          Edit
+        </Button>
+        <Button size="small" fullWidth color="primary" variant="contained" onClick={() => { deleteVideo() }}>
           Delete
         </Button>
       </CardActions>

@@ -11,7 +11,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import axios from "axios"
 import CustomDialog from '../App/Dialog'
-
+import CardActions from '@material-ui/core/CardActions';
 
 
 
@@ -80,25 +80,28 @@ const VideoPackage = (props) => {
             <div class="col-md-4 col-sm-12" style={{ maxWidth: 350, maxHeight: 400, padding: '10px' }}>
                 <Card  >
                     <CardContent>
-                        <Typography gutterBottom style={{fontSize:'16px',fontWeight:'bold'}} component="h6">
-                            {`Title: ${ cardData.title}`}
+                        <Typography gutterBottom style={{ fontSize: '16px', fontWeight: 'bold' }} component="h6">
+                            {`Title: ${cardData.title}`}
                         </Typography>
-                        <Typography gutterBottom style={{fontSize:'16px',fontWeight:'bold'}} component="h6">
-                            {`Price: ${ cardData.price} `}
+                        <Typography gutterBottom style={{ fontSize: '16px', fontWeight: 'bold' }} component="h6">
+                            {`Price: ${cardData.price} `}
                         </Typography>
-                        <Typography gutterBottom style={{fontSize:'16px',fontWeight:'bold'}} component="h6">
+                        <Typography gutterBottom style={{ fontSize: '16px', fontWeight: 'bold' }} component="h6">
                             {`Description:`}
                         </Typography>
                         <Typography gutterBottom component="h5" style={{ wordBreak: 'break-all' }}>
                             {cardData.description}
                         </Typography>
-                        <Button style={{ height: '41px', padding: '10px' }} fullWidth variant="contained" color="secondary" onClick={(e) => handleEdit(e)}>
+                    </CardContent>
+                    <CardActions>
+                        <Button size='small' fullWidth variant="contained" color="secondary" onClick={(e) => handleEdit(e)}>
                             Edit
   					          </Button>
-                        <Button style={{ height: '41px', padding: '10px', marginTop: '5px' }} fullWidth variant="contained" color="secondary" onClick={() => hadleDelete()}>
+                        <Button size='small' fullWidth variant="contained" color="secondary" onClick={() => hadleDelete()}>
                             Delete
   				            </Button>
-                    </CardContent>
+                    </ CardActions>
+
                 </Card>
             </div>
         )
@@ -239,7 +242,7 @@ const VideoPackage = (props) => {
                 onSubmit={onSubmit}
             />
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', flexDirection: 'row' }}>
-                <Button style={{ padding: '10px', marginTop: '5px', marginBottom: '5px' }} variant="contained" color="secondary" onClick={() => setIsOpen(true)} >
+                <Button style={{ marginTop: '5px', marginBottom: '5px' }} variant="contained" color="secondary" onClick={() => setIsOpen(true)} >
                     Create Package
   				  </Button>
             </div>

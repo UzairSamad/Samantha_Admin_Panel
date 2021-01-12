@@ -31,10 +31,13 @@ const useStyles = makeStyles((theme) => ({
 const Video = (props) => {
 	const classes = useStyles();
 	const [showModal, setShowModal] = React.useState(false)
+	const [isEdit, setIsEdit] = React.useState(false)
 	const [uploadMedia, setUploadMedia] = React.useState(null)
 	const [ArrayData, setArrayData] = React.useState([])
 	const [loader, setLoader] = React.useState(false)
 	const [isOPenSnackBar, setIsOpenSnackBar] = React.useState(false)
+	const [currentItem, setCurrentItem] = React.useState(null)
+
 	const [inputs, setInputs] = React.useState({
 		title: "",
 		price: "",
@@ -172,38 +175,75 @@ const Video = (props) => {
 			price: "",
 			description: ""
 		})
+		setUploadMedia(null)
 		setLoader(false)
 	}
-	const onSubmit = () => {
-		firebase.database().ref(`videos`).push({
-			...data
-		}).then((res) => {
-			onClose()
-			setInputs({
-				title: "",
-				price: "",
-				description: ""
-			})
-			setSnackData({
-				isOPen: true,
-				snackbarMessage: 'Video Added Succesfully',
-				severity: 'success'
-			})
-			setIsOpenSnackBar(true)
 
-
-		}).catch((err) => {
-			alert(err)
-			onClose()
-			setSnackData({
-				isOPen: true,
-				snackbarMessage: 'Failed to upload video',
-				severity: 'error'
-			})
-
-
-
+	const handleEdit = (val) => {
+		setCurrentItem(val)
+		let cardData = ArrayData[val]
+		setIsEdit(true)
+		setShowModal(true)
+		setInputs({
+			title: cardData.title,
+			price: cardData.price,
+			description: cardData.description
 		})
+		setUploadMedia(cardData.video)
+	}
+	const onSubmit = () => {
+		isEdit ?
+			firebase.database().ref(`videos/${currentItem}`).update({ ...data }).then(res => {
+				onClose()
+				setInputs({
+					title: "",
+					price: "",
+					description: ""
+				})
+				setSnackData({
+					isOPen: true,
+					snackbarMessage: 'Video Updated  Succesfully',
+					severity: 'success'
+				})
+				setIsOpenSnackBar(true)
+			}).catch((err) => {
+				alert(err)
+				onClose()
+				setSnackData({
+					isOPen: true,
+					snackbarMessage: 'Failed to Update Video',
+					severity: 'error'
+				})
+			}) :
+			firebase.database().ref(`videos`).push({
+				...data
+			}).then((res) => {
+				onClose()
+				setInputs({
+					title: "",
+					price: "",
+					description: ""
+				})
+				setSnackData({
+					isOPen: true,
+					snackbarMessage: 'Video Added Succesfully',
+					severity: 'success'
+				})
+				setIsOpenSnackBar(true)
+
+
+			}).catch((err) => {
+				alert(err)
+				onClose()
+				setSnackData({
+					isOPen: true,
+					snackbarMessage: 'Failed to upload video',
+					severity: 'error'
+				})
+
+
+
+			})
 	}
 	console.log(inputs, "INPUASDASD");
 	const data = {
@@ -221,7 +261,7 @@ const Video = (props) => {
 				</Alert>
 			</Snackbar>
 			<CustomDialog
-				title={'Add New Video'}
+				title={isEdit ? 'Edit Video' : 'Add New Video'}
 				renderDialogBody={() => renderDialogContent()}
 				isOPen={showModal}
 				onClose={onClose}
@@ -244,6 +284,7 @@ const Video = (props) => {
 						return (
 							<div class="col-md-4 col-sm-12">
 								<MediaCard
+									editVideo={() => handleEdit(val)}
 									renderkey={val}
 									data={ArrayData[val]}
 									handleOPenSnack={() => {

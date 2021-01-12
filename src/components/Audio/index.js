@@ -35,11 +35,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Audio = (props) => {
 	const classes = useStyles();
+	const [isEdit, setIsEdit] = React.useState(false)
 	const [showModal, setShowModal] = React.useState(false)
 	const [uploadMedia, setUploadMedia] = React.useState(null)
 	const [ArrayData, setArrayData] = React.useState([])
 	const [loader, setLoader] = React.useState(false)
 	const [isOPenSnackBar, setIsOpenSnackBar] = React.useState(false)
+	const [currentItem, setCurrentItem] = React.useState(null)
+
 	const [snackData, setSnackData] = React.useState({
 		isOPen: false,
 		snackbarMessage: null,
@@ -76,9 +79,46 @@ const Audio = (props) => {
 			description: ""
 		})
 	}
-
+	const handleEdit = (val) =>{
+		setCurrentItem(val)
+		let cardData = ArrayData[val]
+		setIsEdit(true)
+		setShowModal(true)
+		setInputs({
+			title: cardData.title,
+			price: cardData.price,
+			description: cardData.description
+		})
+		setUploadMedia(cardData.audio)
+	}
 	const onSubmit = () => {
 		alert('called')
+		isEdit ? 
+		firebase.database().ref(`audio/${currentItem}`).update({ ...data }).then(res => {
+			onClose()
+			setInputs({
+				title: "",
+				price: "",
+				description: ""
+			})
+			setSnackData({
+				isOPen: true,
+				snackbarMessage: 'Audio Updated  Succesfully',
+				severity: 'success'
+			})
+			setIsOpenSnackBar(true)
+		}).catch((err) => {
+			alert(err)
+			onClose()
+			setSnackData({
+				isOPen: true,
+				snackbarMessage: 'Failed to Update Audio',
+				severity: 'error'
+			})
+		})
+		
+		
+		:
 		firebase.database().ref(`audio`).push({
 			...data
 		}).then((res) => {
@@ -207,12 +247,12 @@ const Audio = (props) => {
 
 	return (
 		<div style={{ padding: '20px' }} >
-				<Snackbar open={isOPenSnackBar} autoHideDuration={4000} onClose={handleSnackClose}  >
+			<Snackbar open={isOPenSnackBar} autoHideDuration={4000} onClose={handleSnackClose}  >
 				<Alert severity={snackData.severity}>
 					{snackData.snackbarMessage}
 				</Alert>
 			</Snackbar>
-			<CustomDialog title={'Add New Audio'} renderDialogBody={() => renderDialogContent()} onSubmit={onSubmit} isOPen={showModal} onClose={onclose} />
+			<CustomDialog title={ isEdit? 'Edit Audio':'Add New Audio'} renderDialogBody={() => renderDialogContent()} onSubmit={onSubmit} isOPen={showModal} onClose={onClose} />
 			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 				<h2>	All Audios			</h2>
 				<Button variant="contained" color="secondary" onClick={() => setShowModal(true)}>
@@ -224,7 +264,9 @@ const Audio = (props) => {
 					keys.map(val => {
 						return (
 							<div class="col-md-4 col-sm-12">
-								<MediaCard renderkey={val}
+								<MediaCard
+									editVideo={() => handleEdit(val)}
+									renderkey={val}
 									data={ArrayData[val]}
 									handleOPenSnack={() => {
 										setIsOpenSnackBar(true)
