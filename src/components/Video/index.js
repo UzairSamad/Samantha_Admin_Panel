@@ -33,10 +33,12 @@ const Video = (props) => {
 	const [showModal, setShowModal] = React.useState(false)
 	const [isEdit, setIsEdit] = React.useState(false)
 	const [uploadMedia, setUploadMedia] = React.useState(null)
+	const [thumbnailImage, setThumbnailImage] = React.useState(null)
 	const [ArrayData, setArrayData] = React.useState([])
 	const [loader, setLoader] = React.useState(false)
 	const [isOPenSnackBar, setIsOpenSnackBar] = React.useState(false)
 	const [currentItem, setCurrentItem] = React.useState(null)
+	const [videoLoader, setVideoLoad] = React.useState(false)
 
 	const [inputs, setInputs] = React.useState({
 		title: "",
@@ -69,20 +71,34 @@ const Video = (props) => {
 
 	const renderDialogContent = () => {
 		const inputRef = React.createRef()
+		const inputImageRef = React.createRef()
 
-		const handleOpenfileselect = () => {
-			inputRef.current.click()
+		const handleOpenfileselect = (ref) => {
+			ref.current.click()
 		}
 
 		const handleUploadChange = (e) => {
+			setVideoLoad(true)
+			const formData = new FormData()
+			formData.append("file", e.target.files[0])
+			formData.append("upload_preset", "shp8jses")
+			axios.post("https://api.cloudinary.com/v1_1/duqizyqzf/upload", formData)
+				.then((res) => {
+					setUploadMedia(res.data.secure_url)
+					setVideoLoad(false)
+				}).catch((err) => {
+					// alert("something went wrong")
+					setVideoLoad(false)
+				})
+		}
+		const handleThumbnailchange = (e) => {
 			setLoader(true)
 			const formData = new FormData()
 			formData.append("file", e.target.files[0])
 			formData.append("upload_preset", "shp8jses")
-
 			axios.post("https://api.cloudinary.com/v1_1/duqizyqzf/upload", formData)
 				.then((res) => {
-					setUploadMedia(res.data.secure_url)
+					setThumbnailImage(res.data.secure_url)
 					setLoader(false)
 				}).catch((err) => {
 					// alert("something went wrong")
@@ -109,6 +125,15 @@ const Video = (props) => {
 						style={{ display: "none" }}
 						onChange={(e) => {
 							handleUploadChange(e)
+						}}
+					/>
+					<input
+						type="file"
+						id="file"
+						ref={inputImageRef}
+						style={{ display: "none" }}
+						onChange={(e) => {
+							handleThumbnailchange(e)
 						}}
 					/>
 					<div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
@@ -141,7 +166,7 @@ const Video = (props) => {
 							value={inputs.description}
 						/>
 					</div>
-					<div class="col-md-12 col-sm-12" style={{ marginBottom: '12px' }}>
+					<div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
 						{uploadMedia &&
 							<CardMedia
 								className={classes.media}
@@ -150,17 +175,34 @@ const Video = (props) => {
 								style={{ height: 200 }}
 							/>}
 					</div>
+					<div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
+						{thumbnailImage &&
+							<img style={{height:'200px'}} src={thumbnailImage} />
+						}
+					</div>
 					<div class="col-md-4 col-sm-12" style={{ marginBottom: '12px' }}>
-						{loader ? <CircularProgress /> :
+						{videoLoader ? <CircularProgress /> :
 							uploadMedia != null ?
 								<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => setUploadMedia(null)}>
 									Remove Video
   							</Button>
 								:
-								<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => handleOpenfileselect()}>
+								<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => handleOpenfileselect(inputRef)}>
 									Upload Video
-  				</Button>
-
+  							</Button>
+						}
+					</div>
+				
+					<div class="col-md-4 col-sm-12" style={{ marginBottom: '12px' }}>
+						{loader ? <CircularProgress /> :
+							thumbnailImage != null ?
+								<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => setThumbnailImage(null)}>
+									Remove Thumbnail
+  							</Button>
+								:
+								<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => handleOpenfileselect(inputImageRef)}>
+									Add Thumbnail
+  							</Button>
 						}
 					</div>
 
