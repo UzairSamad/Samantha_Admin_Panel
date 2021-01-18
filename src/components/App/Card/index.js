@@ -9,13 +9,16 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import firebase from "firebase"
 import fire from "../../../database"
+import ReadMoreReact from 'read-more-react';
+
 
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 300,
     marginBottom: "10px",
-    marginTop: "10px"
+    marginTop: "10px",
+    minHeight:450
 
   },
   media: {
@@ -51,19 +54,19 @@ firebase.database().ref(`videos/${renderkey}`).remove().then((res)=>{
           src={data.video}
         />
         <CardContent>
-          <Typography  style={{fontWeight:'bold'}}  component="h2">
+          <Typography   component="p">
             {`Title : ${data.title}`}
           </Typography>
-          <Typography variant="body2" style={{fontWeight:'bold'}}  component="p">
+          <Typography variant="body2"  component="p">
             {`Price: ${data.price}`}
           </Typography>
-          <Typography variant="body2" style={{fontWeight:'bold'}} component="p">
+          <Typography variant="body2" component="p">
             {`Description:`}
           </Typography>
-          <Typography variant="body2" component="p">
+          {/* <Typography variant="body2" component="p">
             {data.description}
-          </Typography>
-         
+          </Typography> */}
+          <ReadMoreReact min={2} text={data.description} />
         </CardContent>
       </CardActionArea>
       <CardActions>

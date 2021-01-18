@@ -12,6 +12,7 @@ import Alert from '@material-ui/lab/Alert';
 import axios from "axios"
 import CustomDialog from '../App/Dialog'
 import CardActions from '@material-ui/core/CardActions';
+import ReadMoreReact from 'read-more-react';
 
 
 
@@ -80,18 +81,20 @@ const VideoPackage = (props) => {
             <div class="col-md-4 col-sm-12" style={{ maxWidth: 350, maxHeight: 400, padding: '10px' }}>
                 <Card  >
                     <CardContent>
-                        <Typography gutterBottom style={{ fontSize: '16px', fontWeight: 'bold' }} component="h6">
+                        <Typography gutterBottom style={{ fontSize: '16px',  }} component="h6">
                             {`Title: ${cardData.title}`}
                         </Typography>
-                        <Typography gutterBottom style={{ fontSize: '16px', fontWeight: 'bold' }} component="h6">
+                        <Typography gutterBottom style={{ fontSize: '16px',  }} component="h6">
                             {`Price: ${cardData.price} `}
                         </Typography>
-                        <Typography gutterBottom style={{ fontSize: '16px', fontWeight: 'bold' }} component="h6">
+                        <Typography gutterBottom style={{ fontSize: '16px',  }} component="h6">
                             {`Description:`}
                         </Typography>
-                        <Typography gutterBottom component="h5" style={{ wordBreak: 'break-all' }}>
+                        {/* <Typography gutterBottom component="h5" style={{ wordBreak: 'break-all' }}>
                             {cardData.description}
-                        </Typography>
+                        </Typography> */}
+                        <ReadMoreReact min={2} text={cardData.description} />
+
                     </CardContent>
                     <CardActions>
                         <Button size='small' fullWidth variant="contained" color="secondary" onClick={(e) => handleEdit(e)}>

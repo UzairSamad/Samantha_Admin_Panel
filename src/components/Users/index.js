@@ -8,10 +8,12 @@ import { InputLabel } from '@material-ui/core';
 import CardMedia from '@material-ui/core/CardMedia';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from "axios"
+import Select from '@material-ui/core/Select';
 import OptimizedField from "../App/OptimizedTextField"
 import firebase from "firebase"
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import FormControl from '@material-ui/core/FormControl';
 import fire from "../../database"
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
 		'& > *': {
 			margin: theme.spacing(1),
 		},
+	},
+	formControl: {
+		marginTop: theme.spacing(2),
+		minWidth: 300,
 	},
 }));
 
@@ -39,6 +45,10 @@ const Video = (props) => {
 	const [isOPenSnackBar, setIsOpenSnackBar] = React.useState(false)
 	const [currentItem, setCurrentItem] = React.useState(null)
 	const [videoLoader, setVideoLoad] = React.useState(false)
+	const [state, setState] = React.useState({
+		age: '',
+		name: 'hai',
+	});
 
 	const [inputs, setInputs] = React.useState({
 		title: "",
@@ -52,11 +62,11 @@ const Video = (props) => {
 	})
 
 	React.useEffect(() => {
-		firebase.database().ref("videos").on("value", snapshot => {
+		firebase.database().ref("users").on("value", snapshot => {
 			let data = snapshot.val() ? snapshot.val() : {}
 			let Items = { ...data }
 			setArrayData(Items)
-			console.log('Items')
+			console.log('Items', Items)
 		})
 	}, [])
 
@@ -68,15 +78,7 @@ const Video = (props) => {
 		}
 		setIsOpenSnackBar(false)
 	}
-	const handleOPenSnack= ()=>{
-		setSnackData({
-			isOPen: true,
-			snackbarMessage: 'Video Deleted  Succesfully',
-			severity: 'error'
-		})
-		setIsOpenSnackBar(true)
 
-	}
 	const renderDialogContent = () => {
 		const inputRef = React.createRef()
 		const inputImageRef = React.createRef()
@@ -97,13 +99,10 @@ const Video = (props) => {
 				}).catch((err) => {
 					// alert("something went wrong")
 					setVideoLoad(false)
-					setSnackData({
-						isOPen: true,
-						snackbarMessage: 'Failed to Upload File ',
-						severity: 'error'
-					})
 				})
 		}
+
+
 		const handleThumbnailchange = (e) => {
 			setLoader(true)
 			const formData = new FormData()
@@ -116,11 +115,6 @@ const Video = (props) => {
 				}).catch((err) => {
 					// alert("something went wrong")
 					setLoader(false)
-					setSnackData({
-						isOPen: true,
-						snackbarMessage: 'Failed to Upload File ',
-						severity: 'error'
-					})
 				})
 		}
 
@@ -132,6 +126,9 @@ const Video = (props) => {
 				[e.target.name]: e.target.value
 			})
 		}
+
+
+
 		return (
 			<>
 
@@ -237,9 +234,14 @@ const Video = (props) => {
 		})
 		setUploadMedia(null)
 		setLoader(false)
-		setThumbnailImage(null)
-
 	}
+	const handleSelectChange = (event) => {
+		const name = event.target.name;
+		setState({
+			...state,
+			[name]: event.target.value,
+		});
+	};
 
 	const handleEdit = (val) => {
 		setCurrentItem(val)
@@ -251,8 +253,7 @@ const Video = (props) => {
 			price: cardData.price,
 			description: cardData.description
 		})
-		setUploadMedia(cardData?.video)
-		setThumbnailImage(cardData?.thumbnailImage)
+		setUploadMedia(cardData.video)
 	}
 	const onSubmit = () => {
 		isEdit ?
@@ -313,8 +314,7 @@ const Video = (props) => {
 		title: inputs.title,
 		price: inputs.price,
 		description: inputs.description,
-		video: uploadMedia,
-		thumbnailImage: thumbnailImage
+		video: uploadMedia
 	}
 
 	return (
@@ -334,30 +334,36 @@ const Video = (props) => {
 				onSubmit={onSubmit}
 
 			/>
-
-			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-				<h2>	All Videos			</h2>
-				<Button variant="contained" color="secondary" onClick={() => setShowModal(true)}>
-					Upload Video
-  				</Button>
-			</div>
 			<div class="row">
-				{
-					keys.map(val => {
-						// const {} = ArrayData[val]
-						return (
-							<div class="col-md-4 col-sm-12">
-								<MediaCard
-									editVideo={() => handleEdit(val)}
-									renderkey={val}
-									data={ArrayData[val]}
-									handleOPenSnack={() => handleOPenSnack()}
-								/>
-							</div>
-						)
-					})
-				}
+				<div class="col-md-6 col-sm-12">
+					<FormControl  className={classes.formControl}>
+						<InputLabel htmlFor="outlined-age-native-simple">Filter Packages By Users</InputLabel>
+						<Select
+							fullWidth
+							native
+							value={state.age}
+							onChange={handleSelectChange}
+							inputProps={{
+								name: 'age',
+								id: 'age-native-simple',
+							}}
+						>
+							<option aria-label="None" value="" />
+							{
+								keys.map((val,ind) => {
+									const {name} = ArrayData[val]
+									return (
+										<option value={ind}>{name}</option>
+									)
+								})
 
+							}
+						</Select>
+					</FormControl>
+
+
+
+				</div>
 			</div>
 		</div>
 	)

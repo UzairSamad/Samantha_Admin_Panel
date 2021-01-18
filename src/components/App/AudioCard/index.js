@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import firebase from "firebase"
 import fire from "../../../database"
+import ReadMoreReact from 'read-more-react';
+
 
 const useStyles = makeStyles({
   root: {
@@ -39,18 +41,16 @@ export default function MediaCard(props) {
     <Card className={classes.root}>
       <CardContent>
         {props.children}
-        <Typography  style={{fontWeight:'bold'}}component="h2">
+        <Typography  component="p">
           {`Title: ${props.data.title}`}
         </Typography>
-        <Typography variant="body2" style={{fontWeight:'bold'}}component="p">
+        <Typography variant="body2" component="p">
           {`Price: ${props.data.price}`}
         </Typography>
-        <Typography variant="body2" style={{fontWeight:'bold'}}component="p">
+        <Typography variant="body2" component="p">
           {`Description:`}
         </Typography>
-        <Typography variant="body2"  component="p">
-          {props.data.description}
-        </Typography>
+        <ReadMoreReact min={2} text={props.data.description} />
       </CardContent>
       <CardActions>
         <Button size="small"  fullWidth color="primary" variant="contained" onClick={handleEditVideo}>

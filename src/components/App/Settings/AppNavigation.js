@@ -38,6 +38,22 @@ const navigationConfig = [
 				icon: 'dashboard',
 				url: '/packages',
 			},
+			{
+				id: 'user',
+				title: 'Users',
+				translate: 'Users',
+				type: 'item',
+				icon: 'dashboard',
+				url: '/users',
+			},
+			{
+				id: 'frevi',
+				title: 'frevi',
+				translate: 'FreeViees',
+				type: 'item',
+				icon: 'dashboard',
+				url: '/freevies',
+			},
 		]
 	},
 ];

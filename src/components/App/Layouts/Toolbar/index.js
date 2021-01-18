@@ -29,7 +29,7 @@ function ToolbarLayout(props) {
 		// this.props.history.push('/login')
 		firebase.auth().signOut().then(function () {
 			// Sign-out successful.
-			window.location = '/login'
+			window.location = '/'
 			localStorage.clear()
 
 		}).catch(function (error) {

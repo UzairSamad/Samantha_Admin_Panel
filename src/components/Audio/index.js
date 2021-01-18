@@ -164,6 +164,11 @@ const Audio = (props) => {
 					setLoader(false)
 				}).catch((err) => {
 					// alert("something went wrong")
+					setSnackData({
+						isOPen: true,
+						snackbarMessage: 'Failed to Upload File ',
+						severity: 'error'
+					})
 					setLoader(false)
 				})
 		}

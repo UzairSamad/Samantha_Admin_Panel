@@ -29,6 +29,16 @@ const routes = [
 		exact: true,
 		component: React.lazy(() => import('../components/Packages'))
 	},
+	{
+		path: '/users',
+		exact: true,
+		component: React.lazy(() => import('../components/Users'))
+	},
+	{
+		path: '/freevies',
+		exact: true,
+		component: React.lazy(() => import('../components/FreeViees'))
+	},
 ];
 
 export default routes;
