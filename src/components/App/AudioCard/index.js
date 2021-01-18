@@ -39,7 +39,7 @@ export default function MediaCard(props) {
   }
   return (
     <Card className={classes.root}>
-      <CardContent>
+      <CardContent  style={{ minHeight:'227px' }}>
         {props.children}
         <Typography  component="p">
           {`Title: ${props.data.title}`}

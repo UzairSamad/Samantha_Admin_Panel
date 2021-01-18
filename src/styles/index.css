@@ -15,6 +15,9 @@ body.no-animate *::after {
     transition: none !important;
     animation: none !important;
 }
+.read-more-button{
+    color: red;
+}
 
 html {
     font-size: 62.5%;

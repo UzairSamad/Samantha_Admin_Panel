@@ -84,7 +84,7 @@ const VideoPackage = (props) => {
         return (
             <div class="col-md-4 col-sm-12" style={{ maxWidth: 350, maxHeight: 400, padding: '10px' }}>
                 <Card  >
-                    <CardContent>
+                    <CardContent style={{ minHeight:'227px' }}>
                         <Typography gutterBottom style={{ fontSize: '16px',  }} component="h6">
                             {`Title: ${cardData.title}`}
                         </Typography>
@@ -101,7 +101,6 @@ const VideoPackage = (props) => {
                             {cardData.description}
                         </Typography> */}
                         <ReadMoreReact min={2} text={cardData.description} />
-
                     </CardContent>
                     <CardActions>
                         <Button size='small' fullWidth variant="contained" color="secondary" onClick={(e) => handleEdit(e)}>

@@ -53,7 +53,7 @@ firebase.database().ref(`videos/${renderkey}`).remove().then((res)=>{
           component="iframe"
           src={data.video}
         />
-        <CardContent>
+        <CardContent style={{minHeight:'200px'}}>
           <Typography   component="p">
             {`Title : ${data.title}`}
           </Typography>
@@ -66,7 +66,7 @@ firebase.database().ref(`videos/${renderkey}`).remove().then((res)=>{
           {/* <Typography variant="body2" component="p">
             {data.description}
           </Typography> */}
-          <ReadMoreReact min={2} text={data.description} />
+          <ReadMoreReact   min={3} text={data.description} />
         </CardContent>
       </CardActionArea>
       <CardActions>
