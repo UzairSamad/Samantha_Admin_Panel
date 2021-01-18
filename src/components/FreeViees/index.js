@@ -48,7 +48,7 @@ const FreeViees = (props) => {
 
     const [data, setData] = React.useState({
         title: '',
-        quantity: '',
+        price: '',
         description: ''
     })
     const [isOPen, setIsOpen] = React.useState(false)
@@ -61,7 +61,7 @@ const FreeViees = (props) => {
     const [currentCard, setCurrentCard] = React.useState(null)
     const [inputs, setInputs] = React.useState({
         title: "",
-        quantity: "",
+        price: "",
         description: ""
     })
     const [snackData, setSnackData] = React.useState({
@@ -110,7 +110,7 @@ const FreeViees = (props) => {
             setInputs({
                 title: cardData.title,
                 description: cardData.description,
-                quantity: cardData.quantity
+                price: cardData.price
             })
 
         }
@@ -138,7 +138,7 @@ const FreeViees = (props) => {
                             {`Title: ${cardData.title}`}
                         </Typography>
                         <Typography gutterBottom style={{ fontSize: '16px' }} component="h6">
-                            {`Quantity: ${cardData.quantity}`}
+                            {`Price: ${cardData.price}`}
                         </Typography>
                         <Typography gutterBottom style={{ fontSize: '16px' }} component="h6">
                             {`Description:`}
@@ -171,7 +171,7 @@ const FreeViees = (props) => {
         setIsEdit(false)
         setInputs({
             title: "",
-            quantity: "",
+            price: "",
             description: ""
         })
         setMediaType(null)
@@ -252,12 +252,12 @@ const FreeViees = (props) => {
                 <div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
 
                     <OptimizedField
-                        name="quantity"
+                        name="price"
                         type="text"
-                        placeholder="Quantity"
-                        label="Quantity"
+                        placeholder="Price"
+                        label="price"
                         onChange={onChange}
-                        value={inputs.quantity}
+                        value={inputs.price}
                     />
                 </div>
                 <div class="col-md-12 col-sm-12" style={{ marginBottom: '12px' }}>
@@ -280,6 +280,9 @@ const FreeViees = (props) => {
                             label="Type"
                             fullWidth
                         >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
                             <MenuItem value={`audio`}>Audio</MenuItem>
                             <MenuItem value={`video`}>Video</MenuItem>
                             <MenuItem value={`pdf`}>Document/PDF</MenuItem>
@@ -327,7 +330,7 @@ const FreeViees = (props) => {
     const onSubmit = () => {
         const newData = {
             title: inputs.title,
-            quantity: inputs.quantity,
+            price: inputs.price,
             description: inputs.description,
             type: mediaType,
             fileUrl: uploadMedia
@@ -338,7 +341,7 @@ const FreeViees = (props) => {
                 onClose()
                 setInputs({
                     title: "",
-                    quantity: "",
+                    price: "",
                     description: ""
                 })
                 setSnackData({
@@ -362,7 +365,7 @@ const FreeViees = (props) => {
                 onClose()
                 setInputs({
                     title: "",
-                    quantity: "",
+                    price: "",
                     description: ""
                 })
                 setSnackData({

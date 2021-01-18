@@ -24,7 +24,8 @@ const VideoPackage = (props) => {
     const [data, setData] = React.useState({
         title: '',
         price: '',
-        description: ''
+        description: '',
+        quantity:''
     })
     const [isOPen, setIsOpen] = React.useState(false)
     const [isEdit, setIsEdit] = React.useState(false)
@@ -35,7 +36,8 @@ const VideoPackage = (props) => {
     const [inputs, setInputs] = React.useState({
         title: "",
         price: "",
-        description: ""
+        description: "",
+        quantity:''
     })
     const [snackData, setSnackData] = React.useState({
         isOPen: false,
@@ -73,7 +75,9 @@ const VideoPackage = (props) => {
             setInputs({
                 title: cardData.title,
                 description: cardData.description,
-                price: cardData.price
+                price: cardData.price,
+                quantity:cardData.quantity,
+
             })
         }
         console.log('carddd', cardData)
@@ -86,6 +90,9 @@ const VideoPackage = (props) => {
                         </Typography>
                         <Typography gutterBottom style={{ fontSize: '16px',  }} component="h6">
                             {`Price: ${cardData.price} `}
+                        </Typography>
+                        <Typography gutterBottom style={{ fontSize: '16px', }} component="h6">
+                            {`Quantity: ${cardData.quantity} `}
                         </Typography>
                         <Typography gutterBottom style={{ fontSize: '16px',  }} component="h6">
                             {`Description:`}
@@ -117,7 +124,8 @@ const VideoPackage = (props) => {
         setInputs({
             title: "",
             price: "",
-            description: ""
+            description: "",
+            quantity:""
         })
         setLoader(false)
     }
@@ -153,6 +161,16 @@ const VideoPackage = (props) => {
                 </div>
                 <div class="col-md-12 col-sm-12" style={{ marginBottom: '12px' }}>
                     <OptimizedField
+                        name="quantity"
+                        type="text"
+                        placeholder="Quantity"
+                        label="Quantity"
+                        onChange={onChange}
+                        value={inputs.quantity}
+                    />
+                </div>
+                <div class="col-md-12 col-sm-12" style={{ marginBottom: '12px' }}>
+                    <OptimizedField
                         name="description"
                         type="text"
                         placeholder="Description"
@@ -175,6 +193,7 @@ const VideoPackage = (props) => {
             title: inputs.title,
             price: inputs.price,
             description: inputs.description,
+            quantity:inputs.quantity
         }
 
         isEdit ?
@@ -183,7 +202,9 @@ const VideoPackage = (props) => {
                 setInputs({
                     title: "",
                     price: "",
-                    description: ""
+                    description: "",
+                    quantity:""
+
                 })
                 setSnackData({
                     isOPen: true,
@@ -208,7 +229,8 @@ const VideoPackage = (props) => {
                 setInputs({
                     title: "",
                     price: "",
-                    description: ""
+                    description: "",
+                    quantity:""
                 })
                 setSnackData({
                     isOPen: true,
