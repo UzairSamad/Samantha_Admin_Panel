@@ -13,7 +13,7 @@ import CardActions from '@material-ui/core/CardActions';
 import axios from "axios"
 import CustomDialog from '../App/Dialog'
 import ReadMoreReact from 'read-more-react';
-
+import { v4 as uuid } from "uuid";
 
 
 
@@ -27,7 +27,7 @@ const AudioPackage = (props) => {
         title: '',
         price: '',
         description: '',
-        quantity:''
+        quantity: ''
 
     })
     const [isOPen, setIsOpen] = React.useState(false)
@@ -40,7 +40,7 @@ const AudioPackage = (props) => {
         title: "",
         price: "",
         description: "",
-        quantity:""
+        quantity: ""
     })
     const [snackData, setSnackData] = React.useState({
         isOPen: false,
@@ -79,15 +79,15 @@ const AudioPackage = (props) => {
                 title: cardData.title,
                 description: cardData.description,
                 price: cardData.price,
-                quantity:cardData.quantity,
+                quantity: cardData.quantity,
             })
         }
         console.log('carddd', cardData)
         return (
             <div class="col-md-4 col-sm-12" style={{ maxWidth: 350, maxHeight: 400, padding: '10px' }}>
                 <Card  >
-                    <CardContent  style={{ minHeight:'227px' }}>
-                        <Typography gutterBottom style={{ fontSize: '16px',  }} component="h6">
+                    <CardContent style={{ minHeight: '227px' }}>
+                        <Typography gutterBottom style={{ fontSize: '16px', }} component="h6">
                             {`Title: ${cardData.title}`}
                         </Typography>
                         <Typography gutterBottom style={{ fontSize: '16px', }} component="h6">
@@ -96,7 +96,7 @@ const AudioPackage = (props) => {
                         <Typography gutterBottom style={{ fontSize: '16px', }} component="h6">
                             {`Quantity: ${cardData.quantity} `}
                         </Typography>
-                        <Typography gutterBottom style={{ fontSize: '16px',  }} component="h6">
+                        <Typography gutterBottom style={{ fontSize: '16px', }} component="h6">
                             {`Description:`}
                         </Typography>
                         {/* <Typography gutterBottom component="h5" style={{ wordBreak: 'break-all' }}>
@@ -128,7 +128,7 @@ const AudioPackage = (props) => {
             title: "",
             price: "",
             description: "",
-            quantity:""
+            quantity: ""
         })
         setLoader(false)
     }
@@ -196,9 +196,10 @@ const AudioPackage = (props) => {
             title: inputs.title,
             price: inputs.price,
             description: inputs.description,
-            quantity:inputs.quantity
-
-        }
+            quantity: inputs.quantity,
+            type: "audio",
+            uuid:uuid()
+        }   
 
         isEdit ?
             firebase.database().ref(`audio-packages/${currentItem}`).update({ ...newData }).then(res => {
@@ -207,7 +208,7 @@ const AudioPackage = (props) => {
                     title: "",
                     price: "",
                     description: "",
-                    quantity:""
+                    quantity: ""
                 })
                 setSnackData({
                     isOPen: true,
@@ -233,7 +234,7 @@ const AudioPackage = (props) => {
                     title: "",
                     price: "",
                     description: "",
-                    quantity:""
+                    quantity: ""
                 })
                 setSnackData({
                     isOPen: true,

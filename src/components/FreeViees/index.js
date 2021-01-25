@@ -38,7 +38,8 @@ const useStyles = makeStyles({
     },
     root: {
         maxWidth: 300,
-        minHeight: 300
+        minHeight: 300,
+        maxHeight:400
     },
 });
 
@@ -52,6 +53,7 @@ const FreeViees = (props) => {
         description: ''
     })
     const [isOPen, setIsOpen] = React.useState(false)
+    const [showType, setType] = React.useState("none")
     const [isEdit, setIsEdit] = React.useState(false)
     const [currentItem, setCurrentItem] = React.useState(null)
     const [isOPenSnackBar, setIsOpenSnackBar] = React.useState(false)
@@ -76,21 +78,22 @@ const FreeViees = (props) => {
 
 
     React.useEffect(() => {
-        firebase.database().ref("freevies").on("value", snapshot => {
+        firebase.database().ref(`freevies/${showType}`).on("value", snapshot => {
             let data = snapshot.val() ? snapshot.val() : {}
             let Items = { ...data }
-            let cardData = Object.values(Items)
-            setArrayData(cardData)
+            setArrayData(Items)
         })
-    }, [])
+    }, [showType])
+
+
 
     // Display Card with package data
     const renderAudioCad = (cardDataKey, indx) => {
-        let id = Object.keys(cardDataKey)[0]
-        let cardData = ArrayData[indx][id]
+        let id = cardDataKey
+        let cardData = ArrayData[cardDataKey]
 
         const hadleDelete = () => {
-            firebase.database().ref(`freevies/${cardData.type}/${id}`).remove().then((res) => {
+            firebase.database().ref(`freevies/${cardData.type}/${cardDataKey}`).remove().then((res) => {
                 setSnackData({
                     isOPen: true,
                     snackbarMessage: 'Deleted  Succesfully',
@@ -123,7 +126,7 @@ const FreeViees = (props) => {
                                 <ReactAudioPlayer
                                     src={cardData.fileUrl}
                                     controls
-                                    style={{ width: '250px', height: '41px', marginBottom: '5px', marginRight: '5px' }}
+                                    style={{ width: '250px',  marginBottom: '5px', marginRight: '5px' }}
                                 />
                             </CardMedia>
                             : cardData.type === 'video' ?
@@ -249,7 +252,7 @@ const FreeViees = (props) => {
                         value={inputs.title}
                     />
                 </div>
-                <div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
+                {/* <div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
 
                     <OptimizedField
                         name="price"
@@ -259,7 +262,7 @@ const FreeViees = (props) => {
                         onChange={onChange}
                         value={inputs.price}
                     />
-                </div>
+                </div> */}
                 <div class="col-md-12 col-sm-12" style={{ marginBottom: '12px' }}>
                     <OptimizedField
                         name="description"
@@ -385,6 +388,11 @@ const FreeViees = (props) => {
                 })
             })
     }
+    const ShowArray = Object.keys(ArrayData)
+
+    const handleChange = (event) => {
+        setType(event.target.value);
+    };
     return (
         <div style={{ padding: '20px' }}>
             <Snackbar open={isOPenSnackBar} autoHideDuration={4000} onClose={handleSnackClose}  >
@@ -392,6 +400,25 @@ const FreeViees = (props) => {
                     {snackData.snackbarMessage}
                 </Alert>
             </Snackbar>
+            <div class="col-md-12 col-sm-12" style={{ marginBottom: '12px' }}>
+                <FormControl fullWidth >
+                    <InputLabel id="demo-simple-select-outlined-label">Select Type</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={showType}
+                        onChange={handleChange}
+                        label="Type"
+                        fullWidth
+                        defaultValue="video"
+                    >
+                        <MenuItem value="none" >None</MenuItem>
+                        <MenuItem value={`audio`}>Audio</MenuItem>
+                        <MenuItem value={`video`}>Video</MenuItem>
+                        <MenuItem value={`pdf`}>Document/PDF</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
             <CustomDialog
                 title={isEdit ? 'Edit ' : 'Create '}
                 renderDialogBody={() => renderDialogContent()}
@@ -407,14 +434,16 @@ const FreeViees = (props) => {
   				  </Button>
             </div>
             <div class="row">
-                {
-                    ArrayData.map((val, ind) => {
+                {ShowArray.length > 0 ? (
+                    ShowArray.map((val, ind) => {
                         return (
                             <>
                                 {renderAudioCad(val, ind)}
                             </>
                         )
                     })
+
+                ) : <div style={{ display: "flex", flex: 1, justifyContent: "center", alignItems: "center", fontWeight: "bold", fontSize: 25 }}>No Data Found </div>
                 }
             </div>
         </div>

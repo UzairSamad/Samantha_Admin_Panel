@@ -13,7 +13,7 @@ import axios from "axios"
 import CustomDialog from '../App/Dialog'
 import CardActions from '@material-ui/core/CardActions';
 import ReadMoreReact from 'read-more-react';
-
+import { v4 as uuid } from "uuid";
 
 
 
@@ -25,7 +25,7 @@ const VideoPackage = (props) => {
         title: '',
         price: '',
         description: '',
-        quantity:''
+        quantity: ''
     })
     const [isOPen, setIsOpen] = React.useState(false)
     const [isEdit, setIsEdit] = React.useState(false)
@@ -37,7 +37,7 @@ const VideoPackage = (props) => {
         title: "",
         price: "",
         description: "",
-        quantity:''
+        quantity: ''
     })
     const [snackData, setSnackData] = React.useState({
         isOPen: false,
@@ -76,7 +76,7 @@ const VideoPackage = (props) => {
                 title: cardData.title,
                 description: cardData.description,
                 price: cardData.price,
-                quantity:cardData.quantity,
+                quantity: cardData.quantity,
 
             })
         }
@@ -84,17 +84,17 @@ const VideoPackage = (props) => {
         return (
             <div class="col-md-4 col-sm-12" style={{ maxWidth: 350, maxHeight: 400, padding: '10px' }}>
                 <Card  >
-                    <CardContent style={{ minHeight:'227px' }}>
-                        <Typography gutterBottom style={{ fontSize: '16px',  }} component="h6">
+                    <CardContent style={{ minHeight: '227px' }}>
+                        <Typography gutterBottom style={{ fontSize: '16px', }} component="h6">
                             {`Title: ${cardData.title}`}
                         </Typography>
-                        <Typography gutterBottom style={{ fontSize: '16px',  }} component="h6">
+                        <Typography gutterBottom style={{ fontSize: '16px', }} component="h6">
                             {`Price: ${cardData.price} `}
                         </Typography>
                         <Typography gutterBottom style={{ fontSize: '16px', }} component="h6">
                             {`Quantity: ${cardData.quantity} `}
                         </Typography>
-                        <Typography gutterBottom style={{ fontSize: '16px',  }} component="h6">
+                        <Typography gutterBottom style={{ fontSize: '16px', }} component="h6">
                             {`Description:`}
                         </Typography>
                         {/* <Typography gutterBottom component="h5" style={{ wordBreak: 'break-all' }}>
@@ -124,7 +124,7 @@ const VideoPackage = (props) => {
             title: "",
             price: "",
             description: "",
-            quantity:""
+            quantity: ""
         })
         setLoader(false)
     }
@@ -192,7 +192,10 @@ const VideoPackage = (props) => {
             title: inputs.title,
             price: inputs.price,
             description: inputs.description,
-            quantity:inputs.quantity
+            quantity: inputs.quantity,
+            type: "video",
+            uuid: uuid()
+
         }
 
         isEdit ?
@@ -202,7 +205,7 @@ const VideoPackage = (props) => {
                     title: "",
                     price: "",
                     description: "",
-                    quantity:""
+                    quantity: ""
 
                 })
                 setSnackData({
@@ -229,7 +232,7 @@ const VideoPackage = (props) => {
                     title: "",
                     price: "",
                     description: "",
-                    quantity:""
+                    quantity: ""
                 })
                 setSnackData({
                     isOPen: true,

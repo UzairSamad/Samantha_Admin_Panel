@@ -92,7 +92,7 @@ const Audio = (props) => {
 		setUploadMedia(cardData.audio)
 	}
 	const onSubmit = () => {
-		alert('called')
+		// alert('called')
 		isEdit ? 
 		firebase.database().ref(`audio/${currentItem}`).update({ ...data }).then(res => {
 			onClose()

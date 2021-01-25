@@ -68,7 +68,7 @@ const Video = (props) => {
 		}
 		setIsOpenSnackBar(false)
 	}
-	const handleOPenSnack= ()=>{
+	const handleOPenSnack = () => {
 		setSnackData({
 			isOPen: true,
 			snackbarMessage: 'Video Deleted  Succesfully',
@@ -341,6 +341,7 @@ const Video = (props) => {
 					Upload Video
   				</Button>
 			</div>
+			
 			<div class="row">
 				{
 					keys.map(val => {
