@@ -8,6 +8,7 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { use } from 'marked';
 
 /* Chart code */
 // Themes begin
@@ -51,18 +52,35 @@ const useStyles = makeStyles((theme) => ({
 export default function DashBoard() {
 	const classes = useStyles();
 	const [users, setUsers] = useState('')
+	const [visitors, setVisitors] = useState('')
 
 
 
 	useEffect(function effectFunction() {
+		getVisitors()
+		getUsers()
+
+	}, []);
+
+
+	const getVisitors = () => {
+		firebase.database().ref('visitors').on('value', snapshot => {
+			let data = snapshot.val() ? snapshot.val() : {};
+			let HistoryItems = { ...data };
+			setVisitors(HistoryItems)
+		})
+	}
+	const getUsers = () => {
 		firebase.database().ref('users').on('value', snapshot => {
 			let data = snapshot.val() ? snapshot.val() : {};
 			let HistoryItems = { ...data };
 			setUsers(HistoryItems)
 		})
-	}, []);
+
+	}
 
 	const usersLength = Object.keys(users)
+	const visitorsLength = Object.keys(visitors)
 
 
 	let capacity = 6000;
@@ -142,18 +160,18 @@ export default function DashBoard() {
 
 	return (
 		<>
-			<div className={classes.root} style={{ marginLeft: 10,marginRight:10 }}>
+			<div className={classes.root} style={{ marginLeft: 10, marginRight: 10 }}>
 				<Grid container spacing={3}>
 					<Grid item xs={12} sm={3}>
 						<Paper className={classes.paper}>
 							<div style={{ textAlign: "center", fontSize: 20, fontWeight: "bold" }}>Total Users</div>
-							<h1 style={{ marginTop: '10%', color: 'black', textAlign: "center" }}>{usersLength.length}</h1>
+							<h1 style={{ marginTop: '10%', color: 'black', textAlign: "center" }}>{ users && usersLength.length}</h1>
 						</Paper>
 					</Grid>
 					<Grid item xs={12} sm={3}>
 						<Paper className={classes.paper}>
 							<div style={{ textAlign: "center", fontSize: 20, fontWeight: "bold" }}>Total Visitors</div>
-							<h1 style={{ marginTop: '10%', color: 'black', textAlign: "center" }}>{usersLength.length}</h1>
+							<h1 style={{ marginTop: '10%', color: 'black', textAlign: "center" }}>{visitors && visitorsLength.length}</h1>
 						</Paper>
 					</Grid>
 					<Grid item xs={12} sm={3}>

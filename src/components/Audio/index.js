@@ -42,6 +42,10 @@ const Audio = (props) => {
 	const [loader, setLoader] = React.useState(false)
 	const [isOPenSnackBar, setIsOpenSnackBar] = React.useState(false)
 	const [currentItem, setCurrentItem] = React.useState(null)
+	const [thumbnailImage, setThumbnailImage] = React.useState(null)
+	const [audioLoader, setAudioLoader] = React.useState(false)
+
+
 
 	const [snackData, setSnackData] = React.useState({
 		isOPen: false,
@@ -78,6 +82,10 @@ const Audio = (props) => {
 			price: "",
 			description: ""
 		})
+		setThumbnailImage(null)
+		setLoader(false)
+		setAudioLoader(false)
+		setUploadMedia(null)
 	}
 	const handleEdit = (val) =>{
 		setCurrentItem(val)
@@ -89,6 +97,7 @@ const Audio = (props) => {
 			price: cardData.price,
 			description: cardData.description
 		})
+		setThumbnailImage(cardData?.thumbnailImage)
 		setUploadMedia(cardData.audio)
 	}
 	const onSubmit = () => {
@@ -145,15 +154,38 @@ const Audio = (props) => {
 		})
 	}
 
+
+
 	const renderDialogContent = () => {
 		const inputRef = React.createRef()
+		const inputImageRef = React.createRef()
 
-		const handleOpenfileselect = () => {
-			inputRef.current.click()
+
+		const handleOpenfileselect = (ref) => {
+			ref.current.click()
+		}
+		const handleThumbnailchange = (e) => {
+			setLoader(true)
+			const formData = new FormData()
+			formData.append("file", e.target.files[0])
+			formData.append("upload_preset", "shp8jses")
+			axios.post("https://api.cloudinary.com/v1_1/duqizyqzf/upload", formData)
+				.then((res) => {
+					setThumbnailImage(res.data.secure_url)
+					setLoader(false)
+				}).catch((err) => {
+					// alert("something went wrong")
+					setLoader(false)
+					setSnackData({
+						isOPen: true,
+						snackbarMessage: 'Failed to Upload File ',
+						severity: 'error'
+					})
+				})
 		}
 
 		const handleUploadChange = (e) => {
-			setLoader(true)
+			setAudioLoader(true)
 			const formData = new FormData()
 			formData.append("file", e.target.files[0])
 			formData.append("upload_preset", "shp8jses")
@@ -161,7 +193,7 @@ const Audio = (props) => {
 			axios.post("https://api.cloudinary.com/v1_1/duqizyqzf/upload", formData)
 				.then((res) => {
 					setUploadMedia(res.data.secure_url)
-					setLoader(false)
+					setAudioLoader(false)
 				}).catch((err) => {
 					// alert("something went wrong")
 					setSnackData({
@@ -169,7 +201,7 @@ const Audio = (props) => {
 						snackbarMessage: 'Failed to Upload File ',
 						severity: 'error'
 					})
-					setLoader(false)
+					setAudioLoader(false)
 				})
 		}
 
@@ -190,6 +222,15 @@ const Audio = (props) => {
 						handleUploadChange(e)
 					}}
 				/>
+				<input
+						type="file"
+						id="file"
+						ref={inputImageRef}
+						style={{ display: "none" }}
+						onChange={(e) => {
+							handleThumbnailchange(e)
+						}}
+					/>
 				<div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
 					<OptimizedField
 						name="title"
@@ -219,7 +260,7 @@ const Audio = (props) => {
 						value={inputs.description}
 					/>
 				</div>
-				<div class="col-md-8 col-sm-12" style={{ marginBottom: '12px' }}>
+				<div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
 					{uploadMedia &&
 						<ReactAudioPlayer
 							src={uploadMedia}
@@ -227,18 +268,35 @@ const Audio = (props) => {
 							style={{ width: '300px', height: '41px', marginTop: '17px' }}
 						/>}
 				</div>
+				<div class="col-md-6 col-sm-12" style={{ marginBottom: '12px' }}>
+						{thumbnailImage &&
+							<img style={{ height: '200px' }} src={thumbnailImage} />
+						}
+					</div>
 				<div class="col-md-4 col-sm-12" style={{ marginBottom: '12px' }}>
-					{loader ? <CircularProgress /> :
+					{audioLoader? <CircularProgress /> :
 						uploadMedia != null ?
 							<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => setUploadMedia(null)}>
 								Remove Audio
   							</Button>
 							:
-							<Button onClick={() => handleOpenfileselect()} style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary">
+							<Button onClick={() => handleOpenfileselect(inputRef)} style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary">
 								Upload Audio
 						  </Button>
 					}
 				</div>
+				<div class="col-md-4 col-sm-12" style={{ marginBottom: '12px' }}>
+						{loader ? <CircularProgress /> :
+							thumbnailImage != null ?
+								<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => setThumbnailImage(null)}>
+									Remove Thumbnail
+  							</Button>
+								:
+								<Button style={{ height: '41px', marginTop: '17px' }} variant="contained" fullWidth color="secondary" onClick={() => handleOpenfileselect(inputImageRef)}>
+									Add Thumbnail
+  							</Button>
+						}
+					</div>
 
 			</div>
 		)
@@ -247,7 +305,8 @@ const Audio = (props) => {
 		title: inputs.title,
 		price: inputs.price,
 		description: inputs.description,
-		audio: uploadMedia
+		audio: uploadMedia,
+		thumbnailImage: thumbnailImage
 	}
 
 	return (
